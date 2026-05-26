@@ -1,48 +1,56 @@
 # 瓶颈猎手观察名单（持续更新）
 
-最后更新：2026-05-26（早间扫描）  
-下次复查：2026-05-26 午后扫描
+最后更新：2026-05-26 05:18（第二轮扫描）  
+下次复查：2026-05-26 下一轮
 
 ---
 
 ## 重点关注（信号强度★★★★+）
 
-### 1. Aixtron (AIXA，法兰克福交易所) ★★★ ⚠️短期执行风险 【2026-05-26降级：★★★★→★★★】
+### 1. Aixtron (AIXA，法兰克福交易所) ★★★★ ⚠️H2执行高度后置 【2026-05-26升级修正：★★★→★★★★】
 **瓶颈环节**：InP MOCVD外延设备（A级）  
-**市值**：约€2-3B（估计，基于€560M收入指引，待精确核实）  
+**市值**：约€2-3B（估计，基于€560M收入指引，P/S约4-5x，待精确核实）  
 **瓶颈核心逻辑**：全球InP/光子MOCVD设备70-90%市场份额；设备材料专用不可替代；交期12-24个月。任何InP晶圆扩产都必须先排队等Aixtron。这是整条InP供应链扩产速度的物理上限。  
 **信号验证**：
 - ✅ Lumentum 2026-05-19下单多台G10-AsP系统（行业需求真实）
 - ✅ Q1 2026订单量€171M（+30% YoY），光子学订单占约70%
 - ✅ 积压€359M（+17% YoY）
-- ✅ 4月14日全年指引上调至€560M（EBIT 17-20%）
+- ✅ **FY2026指引已确认：€560M ±€30M（2026-04-14正式上调，非下调）** — 早间"guidance cut"记录有误，已修正
+- ✅ EBIT利润率指引17-20%；毛利率约42%（均上调）
 - ✅ Veeco $2.5亿InP订单独立验证行业需求（交叉验证）
-- ❌ **Q1 2026营收€59.4M，同比-47%**（GaN/SiC功率器件极度低迷）
-- ❌ **Q1 毛利率18%（历史正常40-43%）；EBIT亏损€22M**
-- ❌ **有"guidance cut"报道**（与4月14日上调指引冲突，需确认最新全年指引数字）
+- ✅ 现金€273M，现金流正向
+- ❌ Q1 2026营收€59.4M，同比-47%（GaN/SiC功率器件极度低迷）
+- ❌ Q1 毛利率18%；EBIT亏损€22M — **系一次性人员措施（mid-single-digit EUR million）叠加GaN低迷所致**
+- ⚠️ 全年€560M中Q1仅€59M → H2需完成~€420M，H2/H1比例约3.2:1，执行风险高
 - ⚠️ CPO规模化长期存在替代路线风险
-**估值状态**：待精确核实（P/S估计4-5x，若指引维持€560M则合理）  
-**降级理由**：Q1财务表现极差（营收-47%，毛利率18%，EBIT亏损）且指引状态不明；虽然订单书强健，但短期财务兑现存疑。降至★★★，等Q1电话会文本/最新指引数字确认后重新评估。
-**行动**：不加仓；午后优先确认最终全年指引数字  
-**来源**：[Aixtron Q1 营收-47%](https://www.semiconductor-today.com/news_items/2026/may/aixtron-040526.shtml) | [指引下调报道](https://www.ad-hoc-news.de/boerse/news/ueberblick/aixtron-se-stock-de000a0wmpj6-guidance-cut-and-new-graphene-order-keep/69367556) | [Yahoo Finance Q1要点](https://finance.yahoo.com/markets/stocks/articles/aixtron-q1-earnings-call-highlights-160408260.html) | [Lumentum订单5月19日](https://www.semiconductor-today.com/news_items/2026/may/aixtron-200526.shtml)
+**估值状态**：P/S约4-5x（合理区间），绿灯  
+**升级理由**：早间降级依据之一"guidance cut"经确认为误读——April 14公告为正式上调指引（€520M→€560M）；另一依据Q1亏损属周期性低点（GaN低迷+一次性费用），订单积压和光电子订单质量均强。订单书支撑H2强复苏逻辑。
+**关键验证点**：H2 2026财务交付（尤其Q3营收是否如期大幅跳升）  
+**行动**：候选深入研究；等Q2营收开始体现光电子订单收入后重新评估是否执行 `/investment-team`  
+**来源**：[Aixtron指引上调 — Finanzwire](https://www.finanzwire.com/press-release/aixtron-se-etr-aixa-aixtron-se-increases-fy-2026-guidance-and-reports-preliminary-q12026-figures-xdNX74Isy8R) | [CompoundSemiconductor指引上调](https://compoundsemiconductor.net/article/123997/AIXTRON_SE_increases_FY_2026_guidance) | [Aixtron Q1 营收](https://www.semiconductor-today.com/news_items/2026/may/aixtron-040526.shtml) | [Lumentum订单5月19日](https://www.semiconductor-today.com/news_items/2026/may/aixtron-200526.shtml)
 
 ---
 
-### 2. Chemring Group (CHG.L，伦敦交易所) ★★★★ 【2026-05-25新增】
+### 2. Chemring Group (CHG.L，伦敦交易所) ★★★★ 【2026-05-25新增 | 2026-05-26强化，候选升★★★★★】
 **瓶颈环节**：能量材料/固体推进剂（国防弹药链，A级）  
 **市值**：约£1.3B（约$1.6B），FTSE 250成分股  
-**瓶颈核心逻辑**：固体推进剂+高能炸药（HMX/RDX）+烟火技术是精确制导弹药的物理上游，是NATO盟国独立能量材料供应商中少数可投资的上市公司；与挪威政府合作扩产可行性研究，是北约供应链重建的直接参与者。  
+**瓶颈核心逻辑**：固体推进剂+高能炸药（HMX/RDX）+烟火技术是精确制导弹药的物理上游，是NATO盟国独立能量材料供应商中少数可投资的上市公司；挪威基地规划**275%扩产**，签订12-15年长期合同，是NATO供应链重建最主要受益商之一。  
 **信号验证**：
-- ✅ 2025财年收入£497.5M（+Y/Y待核实）；能量材料占65%收入
-- ✅ 订单簿£13.45亿（约1.7倍年收入），订单覆盖率76%
+- ✅ 2025财年收入£497.5M；能量材料占65%收入
+- ✅ 订单簿£13.45亿，**订单覆盖率从76%升至85%（FY26）** — 2026-05-26新确认↑
 - ✅ 12国生产设施，地理分散降低单点风险
-- ✅ P/S约2.6x，低于美国同业（Aerojet P/S~5x）
+- ✅ **挪威基地275%扩产计划**，与客户签订12-15年合同 — 2026-05-26新确认
+- ✅ P/S约2.6x，低于美国同业（Aerojet P/S~5x），估值绿灯
+- ✅ **7位分析师全部Buy，0 Sell；平均目标价633p（现价531p，+19%隐含上涨空间）**
+- ✅ **Rheinmetall独立抢购NC供应**（交叉验证NC紧缺是全NATO共识，不只Chemring视角）
+- ✅ NC供需缺口确认：欧洲实产4,500-10,000吨/年 vs 需求>20,000吨/年（缺口>50%）
 - ⚠️ 英国财政压力可能影响国内订单
 - ⚠️ 公司体量相对小，单一客户依赖需核实
-**估值状态**：便宜（P/S~2.6x，历史低位）  
-**待验证**：利润率细节；L3Harris IPO是否带动同业重评；NATO扩产框架具体合同  
-**状态**：🔴 重点关注，候选深入研究  
-**来源**：[Chemring 2025年报](https://www.chemring.com/~/media/Files/C/Chemring-V3/docs/chemring-annual-report-and-accounts-2025-v1.pdf) | [Chemring AGM更新](https://www.chemring.com/media/press-releases/2026/20-02-2026)
+**估值状态**：便宜（P/S~2.6x），估值绿灯  
+**近期催化剂**：⚡ **June 9, 2026 半年财报**（约2周后），订单覆盖率+利润率更新  
+**待验证**：利润率细节（H1 2026 margins）；L3Harris IPO进展；NATO框架合同细节  
+**建议动作**：在June 9财报前执行 `/investment-team` 深入研究  
+**来源**：[Chemring 2025年报](https://www.chemring.com/~/media/Files/C/Chemring-V3/docs/chemring-annual-report-and-accounts-2025-v1.pdf) | [Chemring AGM更新](https://www.chemring.com/media/press-releases/2026/20-02-2026) | [Kyiv Independent 275%扩产](https://kyivindependent.com/like-any-technology-its-a-race-uks-largest-ammo-maker-rebooting-chemistry-to-break-natos-dependence-on-explosive-imports/) | [Rheinmetall抢购NC](https://www.defensenews.com/global/europe/2025/04/07/rheinmetall-secures-nitrocellulose-supply-amid-european-ammo-scramble/)
 
 ---
 
@@ -168,3 +176,5 @@
 | 2026-05-25（午） | 000533.SZ | **移至已排除** | 股东司法拍卖风险 |
 | 2026-05-26（早） | AIXA | **降级★★★★→★★★** | Q1营收-47%、毛利率18%、EBIT亏损；guidance cut报道存在；短期执行风险升高 |
 | 2026-05-26（早） | VECO | **升级★★★→★★★★** | $250M+ InP MOCVD订单强验证；先进封装+100% YoY；股价盘后+22%；FY指引$740-800M |
+| 2026-05-26 05:18 | AIXA | **修正升级★★★→★★★★** | "guidance cut"系误读——April 14正式公告为上调指引（€520M→€560M，EBIT 17-20%）；早间降级依据消失；H2执行仍是核心风险 |
+| 2026-05-26 05:18 | CHG.L | **数据强化** | 订单覆盖率85%（↑from 76%）；挪威275%扩产；12-15年合同；7/7分析师Buy；June 9财报催化剂；Rheinmetall抢NC独立验证 |

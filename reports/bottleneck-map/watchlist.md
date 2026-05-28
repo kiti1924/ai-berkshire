@@ -1,8 +1,8 @@
 # 瓶颈猎手观察名单（持续更新）
 
-最后更新：2026-05-28 第三十四轮（晚间扫描）：Almonty本周-11%至约C$24.35，Sphene Capital新Buy，Diamond Equity Research FY2027 EPS上调至US$1.68；Chemring June 2官方确认（4天后）；全部评级不变。本轮之前第三十三轮（午后）：Kazakhstan钨5-8年时间线；Almonty Phase 2投票6月8日
+最后更新：2026-05-28 第三十五轮（日间扫描）：全部评级不变；TrendForce 4/20报告新入库（EML/光模块S级额外权威来源）；无新状态变化。本轮之前：第三十四轮（晚间扫描）：Almonty本周-11%至约C$24.35，Sphene Capital新Buy，Diamond Equity Research FY2027 EPS上调至US$1.68
 
-下次复查：**June 2 Chemring半年财报**（**4天后**，最紧迫）；**本周核实Kanto Denka FY2027指引原始公告**（高优先级）；**WF6中断新闻**（<30天临界，随时可能触发）；**June 8** Almonty Phase 2投票+首批Q2产量数据（非6月9日）；**June 9** Almonty AGM；Centrus DOE续约（June 30到期，32天，若June 15前无公告升为实质风险事件）；日本GaN/GaAs厂商库存消耗时间线披露
+下次复查：**June 2 Chemring半年财报**（**4天后**，最紧迫）；**本周核实Kanto Denka FY2027指引原始公告**（高优先级）；**WF6中断新闻**（<3周临界，随时可能触发）；**June 1** Almonty新CFO Jorge Beristain就职；**June 8** Almonty Phase 2投票+首批Q2产量数据；**June 9** Almonty AGM；Centrus DOE续约（June 30到期，33天，若June 15前无公告升为实质风险事件）；日本GaN/GaAs厂商库存消耗时间线披露
 
 ---
 

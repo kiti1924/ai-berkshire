@@ -2134,3 +2134,30 @@ PE 127.8x，GF内在价值391%溢价，10年退出需CAGR 30%。SiPho A级瓶颈
 | 钨矿（ALM/AII.TO） | **A级** | ★★★★，Phase 1 爬坡中；PS ~43x 当前（高），Q4目标 PS ~12x |
 | GOES电工钢（CLF） | **B级** | CLF 亏损不可投；信号：变压器短缺更持久 |
 | 铜（结构性缺口） | **B级** | 真实缺口但主要标的 FCX 为大市值，无纯正小市值机会 |
+| **HVLP4铜箔（020150.KS / 8358.TWO）** | **S级** | ★★★（**新增 2026-06-12**）Goldman Sachs 3年缺口28-39%；Mitsui H2 2026产能已触天花板；Nvidia直接锁产 |
+
+---
+
+#### 瓶颈新增：HVLP4高端铜箔 — 2026-06-12 12:06 首次记录
+
+**背景**：AI服务器（Nvidia Vera Rubin/NVL系列）PCB要求HVLP4铜箔（表面粗糙度<0.5μm），用于44层高频高速信号传输。Digitimes 6/9-6/11连续报道：Nvidia绕过传统供应链直接与Co-Tech接触，Goldman Sachs发布报告警告2026-2028年有效产能缺口28-39%。
+
+**供需缺口**：H2 2026 HVLP4需求≥560吨/月，Mitsui Kinzoku（全球#1）产能上限490吨/月 → 缺口已到来。
+
+| 维度 | 状态 | 数据 |
+|------|------|------|
+| 供给集中度 | 🔴 ≤2家可靠供应商 | Mitsui Kinzoku（全球#1，已触天花板）、Furukawa Electric（#2）；Co-Tech、Lotte为新兴供应商 |
+| 扩产周期 | 🔴 >2年 | 高精度铜箔产线建设需2-3年 |
+| 替代难度 | 🔴 不可替代 | AI服务器44层PCB设计规格强制要求HVLP4；HVLP3信号损耗不达标 |
+| 产能利用率 | 🔴 >100%（缺口） | Mitsui H2 2026需求560吨/月>产能490吨/月 |
+| 需求增速 | 🔴 >50%/年 | HVLP4需求H2 vs H1至少翻倍；Nvidia Vera Rubin全产（2026-01） |
+| 验证周期 | 🟡 6-12月 | PCB厂信号完整性认证周期 |
+
+**可投资标的**：
+| 公司 | 代码 | 说明 |
+|------|------|------|
+| 乐天能源材料 | 020150.KS | ★★★，前向PS ~3.1x（绿灯），产能4倍扩张，Nvidia已验证供应商 |
+| Co-Tech | 8358.TWO | ★★★（观察），前向PS ~14.7x（黄灯），Nvidia 6/9直接接触；10yr PE不过 |
+| Mitsui Kinzoku | 5706.T | 全球#1但多元化大市值，铜箔非纯正标的 |
+
+**来源**：[Digitimes 6/9](https://www.digitimes.com/news/a20260609PD232/) / [Digitimes 6/11](https://www.digitimes.com/news/a20260611PD218/) / [Goldman Sachs via BigGo](https://finance.biggo.com/news/J84_RZ4BX0tZvRTvZP2h) / [TechTimes Lotte](https://www.techtimes.com/articles/316643/20260516/lotte-energy-materials-bets-big-ai-substrate-circuit-foil-high-value-strategic-pivot.htm)

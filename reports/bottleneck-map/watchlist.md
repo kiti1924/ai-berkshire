@@ -3011,3 +3011,73 @@ H1 2026完整财报（2026-06-02发布）：
 | **8/11** | 美伊停火到期 | ICL ★★★★ | 🔴最高 |
 
 *来源：Goldman Sachs via BigGo / TrendForce / EENews Europe / Yageo Q1 财报 / Centrus 官网 / Almonty SEC 6-K*
+
+---
+
+## 更新：2026-06-12 12:06
+
+### 新增标的
+
+#### 乐天能源材料（020150.KS）— ★★★（新增）
+
+| 项目 | 数据（估计） |
+|------|------------|
+| 交易所 | KRX（韩国），代码020150 |
+| 股价 | 48,950 KRW（6/9） |
+| 流通股 | 52.37M股 |
+| 市值 | 2.56T KRW ≈ **USD $1.90B** |
+| Q1 2026营收 | 159.80B KRW |
+| Q2 2026E营收 | 205.40B KRW |
+| 前向年化营收 | ~820B KRW ≈ **USD $607M** |
+| **前向PS** | **~3.1x ✅ 绿灯** |
+| PE | 过渡期（亏损→盈利，预期利润增90%） |
+| 瓶颈定位 | Layer 2，HVLP4铜箔，S级瓶颈 |
+| 信号强度 | ★★★（PS绿灯，盈利过渡期，Nvidia已验证） |
+| 10yr PE基准 | 年化12.4%（15% CAGR，10%净利率）✅ |
+
+**盈利路径（估计）**：EV电池铜箔2024-2025拖累结束；HVLP4 AI电路箔2026 H2起放量（产能3,700→16,000吨/年，投资49B KRW）；预计H2 2026盈亏平衡，2027年盈利。
+
+**主要风险**：盈利时间线不确定；EV铜箔持续拖累；推测客户集中Nvidia Vera Rubin；产能扩张执行风险。
+
+**下一关键节点**：2026年8月Q2财报（确认HVLP4营收占比、EV出血收窄幅度、毛利率改善轨迹）
+
+#### Co-Tech Development（8358.TWO）— ★★★（观察，估值偏高）
+
+| 项目 | 数据（估计） |
+|------|------------|
+| 交易所 | TPEX（台湾）|
+| 市值 | TWD 155.28B ≈ **USD $4.77B** |
+| 2025营收 | TWD 7.88B ≈ $242M（+16% YoY）|
+| 2026E营收 | TWD ~10.5B ≈ $325M（+34%预测） |
+| 前向PS | ~14.7x ⚠️ 黄灯 |
+| PE | ~147x（2025净利润TWD 1.06B≈$33M）|
+| 信号强度 | ★★★（瓶颈真实，但10yr PE退出不过关；等PS<10x） |
+
+**特别事件**：Nvidia 6/9直接接触，锁定HVLP4长期产能；月产能计划翻倍至400吨（年底）。
+
+---
+
+### 状态变化汇总
+
+| 公司 | 代码 | 变化 | 最新评级 |
+|------|------|------|---------|
+| **乐天能源材料** | **020150.KS** | **新增★★★**：HVLP4 S级瓶颈；前向PS 3.1x绿灯；Nvidia Vera Rubin供应链验证；产能4倍扩张 | **★★★（新增）** |
+| **Co-Tech** | **8358.TWO** | **新增★★★（观察）**：台湾#1 HVLP4，Nvidia 6/9直接接触；PS黄灯14.7x，10yr PE退出不过关 | **★★★（观察）** |
+| **ICL Group** | **ICL** | **Q1 2026正向验证**：营收$2B(+14%)，EBITDA$412M(+15%)，全年指引上调$1亿；溴价全年维持高位 | **★★★★ 维持** |
+| **Nittobo** | **3110.T** | **-44%回调**：ATH 32,900→18,550 JPY（月度-30%），无基本面原因，安全边际扩大；7/1分拆T-17天 | **★★★★ 维持** |
+| **Chemring** | **CHG.L** | **弹药补库论点强化**：THAAD/SM-3消耗50%库存，补库3-5年，DoD暂无新合同 | **★★★★ 维持** |
+
+### 催化剂时间表（2026-06-12 12:06版）
+
+| 日期 | 事件 | 标的 | 优先级 |
+|------|------|------|--------|
+| **6/29（T-17天）** | Russell 1000纳入 + Nittobo 5:1分拆 | ALM / 3110.T | 🟡中 |
+| **6/30（T-18天）** | **LEU DOE Option 1b行权截止** | LEU ★★★★★ | 🔴最高 |
+| **7/1（T-19天）** | **Central Glass WF6永久停产** | 4047.T ★★★★★ | 🔴最高 |
+| **7/4（T-22天）** | DOE ≥3台反应堆临界 | LEU ★★★★★ | 🔴高 |
+| **8/5** | ICL Q2财报 | ICL ★★★★ | 🔴高 |
+| **8/11** | 美伊停火到期 | ICL ★★★★ | 🔴高 |
+| **8月（待定）** | 乐天能源材料Q2 2026财报 | 020150.KS ★★★ | 🔴高（关键验证） |
+| **8/12** | 关东电化Q1 FY2027财报（WF6垄断首季） | 4047.T ★★★★★ | 🔴高 |
+
+*来源：乐天能源材料：[TechTimes](https://www.techtimes.com/articles/316643/20260516/lotte-energy-materials-bets-big-ai-substrate-circuit-foil-high-value-strategic-pivot.htm) / [Yahoo Finance 020150.KS](https://finance.yahoo.com/quote/020150.KS/) / [The Elec](https://www.thelec.net/news/articleView.html?idxno=10066)；Co-Tech：[Digitimes 6/9](https://www.digitimes.com/news/a20260609PD232/co-tech-copper-foil-nvidia-2026-capacity.html)；ICL Q1：[TipRanks](https://www.tipranks.com/news/company-announcements/icl-posts-strong-q1-2026-results-on-higher-bromine-potash-and-phosphate-prices)*

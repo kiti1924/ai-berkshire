@@ -104,7 +104,8 @@ def main() -> None:
                 stale.append(str(target.relative_to(ROOT)))
         else:
             target_dir.mkdir(parents=True, exist_ok=True)
-            target.write_text(content, encoding="utf-8", newline="\n")
+            with target.open("w", encoding="utf-8", newline="\n") as f:
+                f.write(content)
         count += 1
 
     if check:

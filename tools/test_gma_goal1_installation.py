@@ -22,18 +22,20 @@ def test_installation_workflow():
         test_home = tmp_path / "AI Berkshire 画面" / "runtime"
         test_claude = tmp_path / "claude_commands"
         test_codex = tmp_path / "codex_home"
+        test_agents_skills = tmp_path / "agents_skills"
         
         # Create a pre-existing custom user skill/command to verify non-destruction
         test_claude.mkdir(parents=True, exist_ok=True)
         (test_claude / "custom-user-command.md").write_text("# My Custom Command", encoding="utf-8")
         
-        (test_codex / "skills" / "custom-user-skill").mkdir(parents=True, exist_ok=True)
-        (test_codex / "skills" / "custom-user-skill" / "SKILL.md").write_text("# My Custom Skill", encoding="utf-8")
+        (test_agents_skills / "custom-user-skill").mkdir(parents=True, exist_ok=True)
+        (test_agents_skills / "custom-user-skill" / "SKILL.md").write_text("# My Custom Skill", encoding="utf-8")
 
         env = os.environ.copy()
         env["AI_BERKSHIRE_HOME"] = str(test_home)
         env["CLAUDE_COMMANDS_DIR"] = str(test_claude)
         env["CODEX_HOME"] = str(test_codex)
+        env["AGENTS_SKILLS_DIR"] = str(test_agents_skills)
         # Ensure API key is NOT set
         env.pop("EDINET_API_KEY", None)
 
@@ -53,8 +55,8 @@ def test_installation_workflow():
         assert res.returncode == 0, f"Codex skills install failed: {res.stderr}"
         
         # Verify custom skill is preserved
-        assert (test_codex / "skills" / "custom-user-skill" / "SKILL.md").exists(), "Custom Codex skill was deleted!"
-        assert (test_codex / "skills" / "investment-research" / "SKILL.md").exists(), "investment-research codex skill missing!"
+        assert (test_agents_skills / "custom-user-skill" / "SKILL.md").exists(), "Custom Codex skill was deleted!"
+        assert (test_agents_skills / "investment-research" / "SKILL.md").exists(), "investment-research codex skill missing!"
 
         # 3. Test Codex prompts install
         cmd = [sys.executable, str(REPO_ROOT / "scripts" / "installer.py"), "codex-prompts"]

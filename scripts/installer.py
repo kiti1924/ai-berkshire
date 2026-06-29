@@ -160,7 +160,8 @@ def install_codex_skills() -> None:
     dest_dir_str = os.environ.get("CODEX_HOME", os.path.expanduser("~/.codex"))
     skills_dest_codex = Path(dest_dir_str).resolve() / "skills"
     
-    skills_dest_agents = Path(os.path.expanduser("~/.agents/skills")).resolve()
+    agents_dest_str = os.environ.get("AGENTS_SKILLS_DIR", os.path.expanduser("~/.agents/skills"))
+    skills_dest_agents = Path(agents_dest_str).resolve()
     skills_dest_agents.mkdir(parents=True, exist_ok=True)
     
     codex_skills_src = ROOT / "codex-skills"

@@ -8,6 +8,7 @@ description: "AI Berkshire Skill: 低品質企業の除外：7指標で一流で
 このSkillは`skills/quality-screen.md`から生成され、Claude CodeとCodexで同じ正本のワークフローを共有する。
 
 - `$ARGUMENTS`は、現在のCodexスレッドで受け取ったユーザーの依頼として扱う。
+- Windows環境のPowerShellでファイル（SKILL.mdや参照資料）を読み取るコマンドを実行する際は、文字化け（CP932/Unicode誤認識）を防ぐため、必ず `Get-Content -Encoding utf8 -Raw <ファイルパス>` または `python -c "import pathlib; print(pathlib.Path(r'<ファイルパス>').read_text(encoding='utf-8'))"` を使用すること。
 - 正本がTask、Agent、WebSearch、Bash、Read、WriteなどClaude Code固有の機能を参照する場合は、このセッションで利用できる最も近いCodex機能へ置き換える。必要に応じてサブエージェント、Web検索、ローカルツール実行用のシェルコマンド、ワークスペース内の通常のファイル編集を使う。
 - 共通ツールは本リポジトリの`tools/`から使用する。`~/ai-berkshire/tools/...`を参照するコマンドは、リポジトリを`~/ai-berkshire`へチェックアウトした前提である。必要なら現在のワークスペースのパスを優先する。
 - `AGENTS.md`の調査品質規則を維持する。財務データを照合し、評価と計算には精密計算ツールを使い、不確実性と情報源の不足を明示する。

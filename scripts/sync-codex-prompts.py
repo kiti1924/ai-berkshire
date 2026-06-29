@@ -41,7 +41,7 @@ def prompt_for(source: Path) -> str:
         "---\n\n"
         f"この依頼には、導入済みのAI Berkshire Codex Skill `{name}`を使用する。\n\n"
         f"Skillがまだ読み込まれていない場合は、"
-        f"`~/ai-berkshire/codex-skills/{name}/SKILL.md`を読み、その指示に従う。\n\n"
+        f"`Get-Content -Encoding utf8 -Raw ~/.agents/skills/{name}/SKILL.md` または Python 経由で読み、その指示に従う。\n\n"
         "ユーザー引数：\n"
         "$ARGUMENTS\n"
     )

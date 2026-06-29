@@ -66,7 +66,8 @@ def main() -> None:
             if not target.exists() or target.read_text(encoding="utf-8-sig") != content:
                 stale.append(str(target.relative_to(ROOT)))
         else:
-            target.write_text(content, encoding="utf-8", newline="\n")
+            with target.open("w", encoding="utf-8", newline="\n") as f:
+                f.write(content)
         count += 1
 
     if check:

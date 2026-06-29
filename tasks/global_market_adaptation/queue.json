@@ -154,7 +154,7 @@
       "name": "gma-12-reports-audit",
       "title": "Reports, audit, and degraded operation",
       "dependencies": [5, 10, 11],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "標準レポートおよび詳細アーティファクト出力パス実装",
         "report audit 4市場対応および根拠追跡・秘密情報遮断"

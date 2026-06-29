@@ -1,4 +1,4 @@
-﻿---
+---
 description: "AI Berkshireのスラッシュエントリ：企業ニュース速報：株価急変の要因を短時間で判定する。"
 argument-hint: $ARGUMENTS
 ---

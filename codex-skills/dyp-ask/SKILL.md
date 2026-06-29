@@ -1,4 +1,4 @@
-﻿---
+---
 name: dyp-ask
 description: "AI Berkshire Skill: 段永平式Q&A：その思考法で考える（原本: skills/dyp-ask.md）"
 ---

@@ -1,4 +1,4 @@
-﻿---
+---
 name: investment-checklist
 description: "AI Berkshire Skill: バフェット流・購入前投資チェックリスト（原本: skills/investment-checklist.md）"
 ---

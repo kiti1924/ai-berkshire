@@ -1,4 +1,4 @@
-﻿---
+---
 name: quality-screen
 description: "AI Berkshire Skill: 低品質企業の除外：7指標で一流ではない企業を素早くふるい落とす（原本: skills/quality-screen.md）"
 ---

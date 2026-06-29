@@ -1,4 +1,4 @@
-﻿---
+---
 description: "AI Berkshireのスラッシュエントリ：業界投資調査：value chain全体と主要企業を分析する。"
 argument-hint: $ARGUMENTS
 ---

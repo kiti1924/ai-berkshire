@@ -1,4 +1,4 @@
-﻿---
+---
 description: "AI Berkshireのスラッシュエントリ：ポートフォリオ・レビュー：企業調査から資産配分へ。"
 argument-hint: $ARGUMENTS
 ---

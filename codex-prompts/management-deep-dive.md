@@ -1,4 +1,4 @@
-﻿---
+---
 description: "AI Berkshireのスラッシュエントリ：経営陣の深掘り：株式を通じて誰へ資本を託すか。"
 argument-hint: $ARGUMENTS
 ---

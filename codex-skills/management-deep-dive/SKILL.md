@@ -1,4 +1,4 @@
-﻿---
+---
 name: management-deep-dive
 description: "AI Berkshire Skill: 経営陣の深掘り：株式を通じて誰へ資本を託すか（原本: skills/management-deep-dive.md）"
 ---

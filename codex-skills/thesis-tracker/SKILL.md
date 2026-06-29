@@ -1,4 +1,4 @@
-﻿---
+---
 name: thesis-tracker
 description: "AI Berkshire Skill: 投資仮説トラッカー：購入後の規律を保つ（原本: skills/thesis-tracker.md）"
 ---

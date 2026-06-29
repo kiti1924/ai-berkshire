@@ -1,4 +1,4 @@
-﻿---
+---
 name: wechat-article
 description: "AI Berkshire Skill: WeChat公式アカウント記事：執筆・編集・読者の3 Agentで仕上げる（原本: skills/wechat-article.md）"
 ---

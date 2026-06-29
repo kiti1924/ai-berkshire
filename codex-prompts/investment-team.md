@@ -1,4 +1,4 @@
-﻿---
+---
 description: "AI Berkshireのスラッシュエントリ：投資調査チーム：4役割による並行分析。"
 argument-hint: $ARGUMENTS
 ---

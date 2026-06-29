@@ -1,4 +1,4 @@
-﻿---
+---
 name: investment-team
 description: "AI Berkshire Skill: 投資調査チーム：4役割による並行分析（原本: skills/investment-team.md）"
 ---

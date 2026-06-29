@@ -30,7 +30,7 @@ def yaml_quote(value: str) -> str:
 
 def prompt_for(source: Path) -> str:
     name = source.stem
-    source_text = source.read_text(encoding="utf-8")
+    source_text = source.read_text(encoding="utf-8-sig")
     _, body = split_frontmatter(source_text)
     title = first_heading(body, name)
     description = f"AI Berkshireのスラッシュエントリ：{title}。"
@@ -66,7 +66,7 @@ def main() -> None:
             if not target.exists() or target.read_text(encoding="utf-8-sig") != content:
                 stale.append(str(target.relative_to(ROOT)))
         else:
-            target.write_text(content, encoding="utf-8-sig")
+            target.write_text(content, encoding="utf-8", newline="\n")
         count += 1
 
     if check:

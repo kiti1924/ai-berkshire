@@ -1,4 +1,4 @@
-﻿---
+---
 description: "AI Berkshireのスラッシュエントリ：業界funnel screening：全市場から3社へ絞る価値投資process。"
 argument-hint: $ARGUMENTS
 ---

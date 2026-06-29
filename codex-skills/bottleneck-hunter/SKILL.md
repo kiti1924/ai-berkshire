@@ -1,4 +1,4 @@
-﻿---
+---
 name: bottleneck-hunter
 description: "AI Berkshire Skill: supply chain bottleneck探索：世界の産業chainにある制約を投資調査へつなげる（原本: skills/bottleneck-hunter.md）"
 ---

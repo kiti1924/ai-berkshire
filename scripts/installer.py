@@ -158,20 +158,27 @@ def install_codex_skills() -> None:
         subprocess.run([sys.executable, str(sync_script)], check=True)
         
     dest_dir_str = os.environ.get("CODEX_HOME", os.path.expanduser("~/.codex"))
-    skills_dest = Path(dest_dir_str).resolve() / "skills"
-    skills_dest.mkdir(parents=True, exist_ok=True)
+    skills_dest_codex = Path(dest_dir_str).resolve() / "skills"
+    skills_dest_codex.mkdir(parents=True, exist_ok=True)
+    
+    skills_dest_agents = Path(os.path.expanduser("~/.agents/skills")).resolve()
+    skills_dest_agents.mkdir(parents=True, exist_ok=True)
     
     codex_skills_src = ROOT / "codex-skills"
     installed: list[str] = []
     if codex_skills_src.exists():
         for skill_dir in codex_skills_src.iterdir():
             if skill_dir.is_dir():
-                target = skills_dest / skill_dir.name
-                atomic_copytree(skill_dir, target)
-                installed.append(str(target))
+                target_codex = skills_dest_codex / skill_dir.name
+                atomic_copytree(skill_dir, target_codex)
+                installed.append(str(target_codex))
+                
+                target_agents = skills_dest_agents / skill_dir.name
+                atomic_copytree(skill_dir, target_agents)
+                installed.append(str(target_agents))
                 
     update_manifest(home, "codex_skills", bundle_files + installed)
-    print(f"Installed Codex skills to {skills_dest}")
+    print(f"Installed Codex skills to {skills_dest_codex} and {skills_dest_agents}")
     print(f"Runtime bundle updated in {home}")
 
 def install_codex_prompts() -> None:

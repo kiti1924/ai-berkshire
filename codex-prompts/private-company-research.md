@@ -1,4 +1,4 @@
-﻿---
+---
 description: "AI Berkshireのスラッシュエントリ：非上場企業調査：6 Agentによる情報拼図と企業価値評価。"
 argument-hint: $ARGUMENTS
 ---

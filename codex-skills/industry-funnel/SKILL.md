@@ -1,4 +1,4 @@
-﻿---
+---
 name: industry-funnel
 description: "AI Berkshire Skill: 業界funnel screening：全市場から3社へ絞る価値投資process（原本: skills/industry-funnel.md）"
 ---

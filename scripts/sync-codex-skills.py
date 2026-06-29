@@ -88,7 +88,7 @@ def main() -> None:
     stale: list[str] = []
     for source in sorted(CLAUDE_SKILLS.glob("*.md")):
         name = source.stem
-        source_text = source.read_text(encoding="utf-8")
+        source_text = source.read_text(encoding="utf-8-sig")
         target_dir = CODEX_SKILLS / name
         target = target_dir / "SKILL.md"
         content = metadata_for(name, source.name, source_text) + codex_body(
@@ -99,7 +99,7 @@ def main() -> None:
                 stale.append(str(target.relative_to(ROOT)))
         else:
             target_dir.mkdir(parents=True, exist_ok=True)
-            target.write_text(content, encoding="utf-8-sig")
+            target.write_text(content, encoding="utf-8", newline="\n")
         count += 1
 
     if check:

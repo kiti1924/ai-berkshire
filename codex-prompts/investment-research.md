@@ -1,4 +1,4 @@
-﻿---
+---
 description: "AI Berkshireのスラッシュエントリ：投資調査：バフェット・マンガー・段永平・李録による統合分析。"
 argument-hint: $ARGUMENTS
 ---

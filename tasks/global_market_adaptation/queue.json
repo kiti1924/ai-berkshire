@@ -73,7 +73,7 @@
       "name": "gma-05-fact-snapshot",
       "title": "Fact snapshot and financial validation",
       "dependencies": [2, 4],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "FactSnapshotおよびEvidence-on-use実装",
         "主要財務計算（時価総額, EV, PER, PBR, ROE, FCF等）の厳密再計算",

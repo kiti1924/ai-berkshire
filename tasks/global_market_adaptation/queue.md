@@ -10,7 +10,7 @@
 | 2 | `gma-02-contracts` | Canonical data contracts | `completed` | Goal 0 |
 | 3 | `gma-03-security-resolution` | Security resolution and market routing | `completed` | Goal 2 |
 | 4 | `gma-04-access-policy` | Access policy, retrieval, and cache | `completed` | Goal 1, Goal 2 |
-| 5 | `gma-05-fact-snapshot` | Fact snapshot and financial validation | `pending` | Goal 2, Goal 4 |
+| 5 | `gma-05-fact-snapshot` | Fact snapshot and financial validation | `completed` | Goal 2, Goal 4 |
 | 6 | `gma-06-us-adapter` | US market adapter | `pending` | Goal 3, Goal 4, Goal 5 |
 | 7 | `gma-07-japan-adapter` | Japan market adapter | `pending` | Goal 3, Goal 4, Goal 5 |
 | 8 | `gma-08-shanghai-adapter` | Shanghai A market adapter | `pending` | Goal 3, Goal 4, Goal 5 |

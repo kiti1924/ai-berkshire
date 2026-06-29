@@ -21,8 +21,8 @@
     {"req_id": 17, "description": "米国・上海A株・香港株の分析ではEDINETキー未設定警告を出さない", "goal_id": 7, "status": "pending"},
     {"req_id": 18, "description": "常駐プロセスなしで分析を完了できる", "goal_id": 13, "status": "pending"},
     {"req_id": 19, "description": "有料データ源なしで標準分析を完了できる", "goal_id": 13, "status": "pending"},
-    {"req_id": 20, "description": "TDnet・JPX等へ大量並列アクセスしない", "goal_id": 4, "status": "pending"},
-    {"req_id": 21, "description": "Yahoo Finance等の補助Web情報を使用できる", "goal_id": 4, "status": "pending"},
+    {"req_id": 20, "description": "TDnet・JPX等へ大量並列アクセスしない", "goal_id": 4, "status": "completed"},
+    {"req_id": 21, "description": "Yahoo Finance等の補助Web情報を使用できる", "goal_id": 4, "status": "completed"},
     {"req_id": 22, "description": "重要数値は出典・時点・単位を追跡できる", "goal_id": 5, "status": "pending"},
     {"req_id": 23, "description": "公式資料と二次情報が競合した場合の優先順位が機能する", "goal_id": 5, "status": "pending"},
     {"req_id": 24, "description": "一部情報が取れない場合も不足を明示して部分完了できる", "goal_id": 12, "status": "pending"},
@@ -32,6 +32,6 @@
     {"req_id": 28, "description": "日本市場では村上世彰型と藤野英人型の分析観点が標準4 Agentへ混合される", "goal_id": 10, "status": "pending"},
     {"req_id": 29, "description": "必要に応じてgovernance_allocatorとmanagement_organizationを独立起動できる", "goal_id": 10, "status": "pending"},
     {"req_id": 30, "description": "APIキーや秘密情報がレポート・Git・ログへ漏れない", "goal_id": 12, "status": "pending"},
-    {"req_id": 31, "description": "キャッシュを無効化しても実行できる", "goal_id": 4, "status": "pending"}
+    {"req_id": 31, "description": "キャッシュを無効化しても実行できる", "goal_id": 4, "status": "completed"}
   ]
 }

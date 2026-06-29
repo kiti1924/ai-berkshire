@@ -61,7 +61,7 @@
       "name": "gma-04-access-policy",
       "title": "Access policy, retrieval, and cache",
       "dependencies": [1, 2],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "domain別rate limitおよび並列数制御実装",
         "Retry-After尊重および403/429/503バックオフ処理",

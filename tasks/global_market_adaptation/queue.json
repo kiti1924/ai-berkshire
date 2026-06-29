@@ -165,7 +165,7 @@
       "name": "gma-13-final-acceptance",
       "title": "End-to-end acceptance and final review",
       "dependencies": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "上位仕様全31項目の受入条件チェックパス",
         "4市場E2Eテストおよび品質ゲートチェック完了"

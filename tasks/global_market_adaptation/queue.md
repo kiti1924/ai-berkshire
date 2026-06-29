@@ -15,7 +15,7 @@
 | 7 | `gma-07-japan-adapter` | Japan market adapter | `completed` | Goal 3, Goal 4, Goal 5 |
 | 8 | `gma-08-shanghai-adapter` | Shanghai A market adapter | `completed` | Goal 3, Goal 4, Goal 5 |
 | 9 | `gma-09-hongkong-adapter` | Hong Kong market adapter | `completed` | Goal 3, Goal 4, Goal 5 |
-| 10 | `gma-10-agent-methodology` | Agent methodology integration | `pending` | Goal 5, Goal 6, Goal 7, Goal 8, Goal 9 |
+| 10 | `gma-10-agent-methodology` | Agent methodology integration | `completed` | Goal 5, Goal 6, Goal 7, Goal 8, Goal 9 |
 | 11 | `gma-11-skill-integration` | Skill and Codex workflow integration | `pending` | Goal 1, Goal 3..10 |
 | 12 | `gma-12-reports-audit` | Reports, audit, and degraded operation | `pending` | Goal 5, Goal 10, Goal 11 |
 | 13 | `gma-13-final-acceptance` | End-to-end acceptance and final review | `pending` | Goal 0..12 |

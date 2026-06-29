@@ -131,7 +131,7 @@
       "name": "gma-10-agent-methodology",
       "title": "Agent methodology integration",
       "dependencies": [5, 6, 7, 8, 9],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "標準4 Agentへの日本人投資家2レンズの正式混合",
         "深掘り2 Agent (governance_allocator, management_organization) 独立起動実装",

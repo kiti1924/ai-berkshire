@@ -5,7 +5,7 @@ argument-hint: $ARGUMENTS
 
 この依頼には、導入済みのAI Berkshire Codex Skill `wechat-article`を使用する。
 
-Skillがまだ読み込まれていない場合は、`Get-Content -Encoding utf8 -Raw ~/.agents/skills/wechat-article/SKILL.md` または Python 経由で読み、その指示に従う。
+Skillがまだ読み込まれていない場合は、`~/.agents/skills/wechat-article/SKILL.md`を読み、その指示に従う。
 
 ユーザー引数：
 $ARGUMENTS

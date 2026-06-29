@@ -214,7 +214,7 @@ Task #{Task番号}：{Task subject}
 
 ### 手順8：報告を保存する
 
-`reports/{会社名}/{会社名}-research-{YYYYMMDD}.md`へ保存する。
+`reports/{会社名}/{会社名}-research-{YYYYMMDD}.md`へ必ずファイル保存する。会話応答への出力だけで終わらせず、書き込みツールまたはシェルコマンド（`mkdir -p reports/{会社名}` および ファイル書き込み）で実際にファイルを保存すること。
 
 ### 手順9：データ監査を行う
 

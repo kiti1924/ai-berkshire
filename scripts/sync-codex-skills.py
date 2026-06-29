@@ -65,6 +65,8 @@ def codex_body(name: str, source_name: str, source_text: str) -> str:
         "- Windows環境のPowerShellでファイル（SKILL.mdや参照資料）を読み取るコマンドを実行する際は、"
         "文字化け（CP932/Unicode誤認識）を防ぐため、必ず `Get-Content -Encoding utf8 -Raw <ファイルパス>` "
         "または `python -c \"import pathlib; print(pathlib.Path(r'<ファイルパス>').read_text(encoding='utf-8'))\"` を使用すること。\n"
+        "- 調査レポート等のファイル書き出し指示（例: `reports/{会社名}/...`）がある場合は、単に会話上にMarkdownを出力して終了せず、"
+        "必ずファイル書き込みツールまたはシェルコマンド（`mkdir -p reports/{会社名}` および ファイル書き込み）を実行して実際にファイルとして保存すること。\n"
         "- 正本がTask、Agent、WebSearch、Bash、Read、WriteなどClaude Code固有の機能を"
         "参照する場合は、このセッションで利用できる最も近いCodex機能へ置き換える。"
         "必要に応じてサブエージェント、Web検索、ローカルツール実行用のシェルコマンド、"

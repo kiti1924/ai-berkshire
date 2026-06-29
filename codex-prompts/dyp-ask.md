@@ -1,4 +1,4 @@
----
+﻿---
 description: "AI Berkshireのスラッシュエントリ：段永平式Q&A：その思考法で考える。"
 argument-hint: $ARGUMENTS
 ---

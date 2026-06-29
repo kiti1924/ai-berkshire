@@ -63,10 +63,10 @@ def main() -> None:
         target = CODEX_PROMPTS / name
         content = prompt_for(source)
         if check:
-            if not target.exists() or target.read_text(encoding="utf-8") != content:
+            if not target.exists() or target.read_text(encoding="utf-8-sig") != content:
                 stale.append(str(target.relative_to(ROOT)))
         else:
-            target.write_text(content, encoding="utf-8")
+            target.write_text(content, encoding="utf-8-sig")
         count += 1
 
     if check:

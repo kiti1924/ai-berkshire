@@ -1,4 +1,4 @@
----
+﻿---
 description: "AI Berkshireのスラッシュエントリ：WeChat公式アカウント記事：執筆・編集・読者の3 Agentで仕上げる。"
 argument-hint: $ARGUMENTS
 ---

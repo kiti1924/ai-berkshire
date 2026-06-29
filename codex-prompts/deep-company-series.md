@@ -1,4 +1,4 @@
----
+﻿---
 description: "AI Berkshireのスラッシュエントリ：企業深掘りseries：8本の長文で一社を理解する。"
 argument-hint: $ARGUMENTS
 ---

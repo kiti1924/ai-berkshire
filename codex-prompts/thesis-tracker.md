@@ -1,4 +1,4 @@
----
+﻿---
 description: "AI Berkshireのスラッシュエントリ：投資仮説トラッカー：購入後の規律を保つ。"
 argument-hint: $ARGUMENTS
 ---

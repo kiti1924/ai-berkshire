@@ -1,4 +1,4 @@
----
+﻿---
 name: financial-data
 description: "AI Berkshire Skill: 財務データ取得・クロスチェック規程（原本: skills/financial-data.md）"
 ---

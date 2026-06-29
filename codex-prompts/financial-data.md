@@ -1,4 +1,4 @@
----
+﻿---
 description: "AI Berkshireのスラッシュエントリ：財務データ取得・クロスチェック規程。"
 argument-hint: $ARGUMENTS
 ---

@@ -1,4 +1,4 @@
----
+﻿---
 name: investment-research
 description: "AI Berkshire Skill: 投資調査：バフェット・マンガー・段永平・李録による統合分析（原本: skills/investment-research.md）"
 ---

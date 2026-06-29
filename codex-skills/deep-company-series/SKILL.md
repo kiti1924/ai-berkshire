@@ -1,4 +1,4 @@
----
+﻿---
 name: deep-company-series
 description: "AI Berkshire Skill: 企業深掘りseries：8本の長文で一社を理解する（原本: skills/deep-company-series.md）"
 ---

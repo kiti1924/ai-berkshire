@@ -1,4 +1,4 @@
----
+﻿---
 description: "AI Berkshireのスラッシュエントリ：supply chain bottleneck探索：世界の産業chainにある制約を投資調査へつなげる。"
 argument-hint: $ARGUMENTS
 ---

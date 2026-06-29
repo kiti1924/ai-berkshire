@@ -1,4 +1,4 @@
----
+﻿---
 name: portfolio-review
 description: "AI Berkshire Skill: ポートフォリオ・レビュー：企業調査から資産配分へ（原本: skills/portfolio-review.md）"
 ---

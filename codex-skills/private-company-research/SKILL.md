@@ -1,4 +1,4 @@
----
+﻿---
 name: private-company-research
 description: "AI Berkshire Skill: 非上場企業調査：6 Agentによる情報拼図と企業価値評価（原本: skills/private-company-research.md）"
 ---

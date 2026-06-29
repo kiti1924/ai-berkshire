@@ -95,11 +95,11 @@ def main() -> None:
             name, source.name, source_text
         )
         if check:
-            if not target.exists() or target.read_text(encoding="utf-8") != content:
+            if not target.exists() or target.read_text(encoding="utf-8-sig") != content:
                 stale.append(str(target.relative_to(ROOT)))
         else:
             target_dir.mkdir(parents=True, exist_ok=True)
-            target.write_text(content, encoding="utf-8")
+            target.write_text(content, encoding="utf-8-sig")
         count += 1
 
     if check:

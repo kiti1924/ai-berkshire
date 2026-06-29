@@ -1,4 +1,4 @@
----
+﻿---
 description: "AI Berkshireのスラッシュエントリ：バフェット流・購入前投資チェックリスト。"
 argument-hint: $ARGUMENTS
 ---

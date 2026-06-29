@@ -1,4 +1,4 @@
----
+﻿---
 name: industry-research
 description: "AI Berkshire Skill: 業界投資調査：value chain全体と主要企業を分析する（原本: skills/industry-research.md）"
 ---

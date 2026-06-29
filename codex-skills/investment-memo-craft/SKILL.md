@@ -1,4 +1,4 @@
----
+﻿---
 name: investment-memo-craft
 description: Codex-only writing and layout overlay for AI Berkshire investment research reports. Use whenever Codex creates, rewrites, revises, or critiques company/industry/fund research reports, especially long-form Markdown reports that need financial rigor, readable business mechanics, contrarian analysis, valuation-to-action guidance, investor-specific recommendations, restrained typography, and clear buy/hold/sell signals. Do not use this to modify Claude Code slash-command sources.
 ---

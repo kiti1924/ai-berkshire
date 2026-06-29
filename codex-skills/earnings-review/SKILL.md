@@ -1,4 +1,4 @@
----
+﻿---
 name: earnings-review
 description: "AI Berkshire Skill: 決算精読：一次資料を深く読む（原本: skills/earnings-review.md）"
 ---

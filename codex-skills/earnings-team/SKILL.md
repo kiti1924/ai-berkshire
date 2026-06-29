@@ -1,4 +1,4 @@
----
+﻿---
 name: earnings-team
 description: "AI Berkshire Skill: 決算精読チーム：4つの投資観点と編集・読者確認を統合する（原本: skills/earnings-team.md）"
 ---

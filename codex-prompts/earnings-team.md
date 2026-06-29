@@ -1,4 +1,4 @@
----
+﻿---
 description: "AI Berkshireのスラッシュエントリ：決算精読チーム：4つの投資観点と編集・読者確認を統合する。"
 argument-hint: $ARGUMENTS
 ---

@@ -1,4 +1,4 @@
----
+﻿---
 description: "AI Berkshireのスラッシュエントリ：決算精読：一次資料を深く読む。"
 argument-hint: $ARGUMENTS
 ---

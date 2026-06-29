@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Security",
+  "type": "object",
+  "required": [
+    "security_id",
+    "issuer_id",
+    "market_id",
+    "ticker",
+    "exchange",
+    "legal_name",
+    "display_name",
+    "security_type",
+    "trading_currency",
+    "reporting_currency",
+    "primary_listing",
+    "identifiers"
+  ],
+  "properties": {
+    "security_id": { "type": "string" },
+    "issuer_id": { "type": "string" },
+    "market_id": { "type": "string", "enum": ["US", "JP", "CN_SH_A", "HK"] },
+    "ticker": { "type": "string" },
+    "exchange": { "type": "string" },
+    "legal_name": { "type": "string" },
+    "display_name": { "type": "string" },
+    "security_type": { "type": "string" },
+    "trading_currency": { "type": "string" },
+    "reporting_currency": { "type": "string" },
+    "primary_listing": { "type": "boolean" },
+    "identifiers": {
+      "type": "object",
+      "properties": {
+        "cik": { "type": ["string", "null"] },
+        "edinet_code": { "type": ["string", "null"] },
+        "isin": { "type": ["string", "null"] },
+        "exchange_code": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

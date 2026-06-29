@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Document",
+  "type": "object",
+  "required": [
+    "document_id",
+    "security_id",
+    "document_type",
+    "title",
+    "retrieved_at",
+    "source_name",
+    "source_type",
+    "source_url",
+    "language",
+    "is_official"
+  ],
+  "properties": {
+    "document_id": { "type": "string" },
+    "security_id": { "type": "string" },
+    "document_type": { "type": "string" },
+    "title": { "type": "string" },
+    "published_at": { "type": ["string", "null"] },
+    "retrieved_at": { "type": "string" },
+    "source_name": { "type": "string" },
+    "source_type": { "type": "string", "enum": ["official", "secondary", "web"] },
+    "source_url": { "type": "string" },
+    "local_cache_path": { "type": ["string", "null"] },
+    "content_hash": { "type": ["string", "null"] },
+    "language": { "type": "string" },
+    "is_official": { "type": "boolean" },
+    "supersedes_document_id": { "type": ["string", "null"] }
+  },
+  "additionalProperties": false
+}

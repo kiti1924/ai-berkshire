@@ -37,7 +37,7 @@
       "name": "gma-02-contracts",
       "title": "Canonical data contracts",
       "dependencies": [0],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "Security, Document, Fact, Evidence, Research Run schema作成",
         "timezone-aware datetime要求と適正検証",

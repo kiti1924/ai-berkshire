@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Evidence",
+  "type": "object",
+  "required": [
+    "evidence_id",
+    "claim_id",
+    "statement",
+    "source_url",
+    "source_rank",
+    "retrieved_at",
+    "supports_claim",
+    "confidence"
+  ],
+  "properties": {
+    "evidence_id": { "type": "string" },
+    "claim_id": { "type": "string" },
+    "statement": { "type": "string" },
+    "source_document_id": { "type": ["string", "null"] },
+    "source_url": { "type": "string" },
+    "source_rank": { "type": "integer" },
+    "published_at": { "type": ["string", "null"] },
+    "retrieved_at": { "type": "string" },
+    "supports_claim": { "type": "boolean" },
+    "confidence": { "type": "string", "enum": ["low", "medium", "high"] }
+  },
+  "additionalProperties": false
+}

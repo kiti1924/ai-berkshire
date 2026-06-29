@@ -7,7 +7,7 @@
 |---|---|---|---|---|
 | 0 | `gma-00-foundation` | Foundation and task contracts | `completed` | None |
 | 1 | `gma-01-installation` | Installation and packaging compatibility | `completed` | Goal 0 |
-| 2 | `gma-02-contracts` | Canonical data contracts | `pending` | Goal 0 |
+| 2 | `gma-02-contracts` | Canonical data contracts | `completed` | Goal 0 |
 | 3 | `gma-03-security-resolution` | Security resolution and market routing | `pending` | Goal 2 |
 | 4 | `gma-04-access-policy` | Access policy, retrieval, and cache | `pending` | Goal 1, Goal 2 |
 | 5 | `gma-05-fact-snapshot` | Fact snapshot and financial validation | `pending` | Goal 2, Goal 4 |

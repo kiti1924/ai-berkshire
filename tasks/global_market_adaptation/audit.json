@@ -2,7 +2,7 @@
   "project": "AI-BERKSHIRE-GLOBAL-MARKET-ADAPTATION",
   "spec_version": "0.3-draft",
   "requirements_mapping": [
-    {"req_id": 1, "description": "4市場の証券を自動判定できる", "goal_id": 3, "status": "pending"},
+    {"req_id": 1, "description": "4市場の証券を自動判定できる", "goal_id": 3, "status": "completed"},
     {"req_id": 2, "description": "利用者は従来どおりSkillへ企業名またはTickerを渡すだけでよい", "goal_id": 11, "status": "pending"},
     {"req_id": 3, "description": "Claude Codeで元リポジトリと同じ1回のインストール操作により利用できる", "goal_id": 1, "status": "completed"},
     {"req_id": 4, "description": "Codexで元リポジトリと同じSkill生成・インストール操作により利用できる", "goal_id": 1, "status": "completed"},

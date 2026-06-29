@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 财报精读团队：四大师并行解读 + 公众号发布."
+description: "AI Berkshireのスラッシュエントリ：決算精読チーム：4つの投資観点と編集・読者確認を統合する。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `earnings-team` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `earnings-team`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/earnings-team/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/earnings-team/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

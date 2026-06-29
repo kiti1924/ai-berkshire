@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 未上市公司研究：多Agent并行深度研究框架."
+description: "AI Berkshireのスラッシュエントリ：非上場企業調査：6 Agentによる情報拼図と企業価値評価。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `private-company-research` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `private-company-research`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/private-company-research/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/private-company-research/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

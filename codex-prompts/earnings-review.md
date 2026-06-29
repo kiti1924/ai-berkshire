@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 财报精读：一手资料深度解读."
+description: "AI Berkshireのスラッシュエントリ：決算精読：一次資料を深く読む。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `earnings-review` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `earnings-review`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/earnings-review/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/earnings-review/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

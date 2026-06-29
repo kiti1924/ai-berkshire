@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 供应链瓶颈猎手：AI驱动的全球产业链瓶颈套利."
+description: "AI Berkshireのスラッシュエントリ：supply chain bottleneck探索：世界の産業chainにある制約を投資調査へつなげる。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `bottleneck-hunter` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `bottleneck-hunter`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/bottleneck-hunter/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/bottleneck-hunter/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

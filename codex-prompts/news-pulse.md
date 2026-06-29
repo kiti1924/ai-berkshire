@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 公司新闻脉搏：股价异动快速归因团队."
+description: "AI Berkshireのスラッシュエントリ：企業ニュース速報：株価急変の要因を短時間で判定する。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `news-pulse` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `news-pulse`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/news-pulse/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/news-pulse/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

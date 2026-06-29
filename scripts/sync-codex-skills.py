@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Codex skills from AI Berkshire Claude command files."""
+"""Generate Codex skills from AI Berkshire Claude command files in Japanese."""
 
 from __future__ import annotations
 
@@ -7,11 +7,9 @@ import re
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 CLAUDE_SKILLS = ROOT / "skills"
 CODEX_SKILLS = ROOT / "codex-skills"
-
 
 def split_frontmatter(text: str) -> tuple[str | None, str]:
     if not text.startswith("---\n"):
@@ -21,18 +19,15 @@ def split_frontmatter(text: str) -> tuple[str | None, str]:
         return None, text
     return text[4:end], text[end + 5 :].lstrip("\n")
 
-
 def first_heading(text: str, fallback: str) -> str:
     for line in text.splitlines():
         if line.startswith("# "):
             return line[2:].strip()
     return fallback
 
-
 def yaml_quote(value: str) -> str:
     value = value.replace("\\", "\\\\").replace('"', '\\"')
     return f'"{value}"'
-
 
 def metadata_for(name: str, source_name: str, source_text: str) -> str:
     existing, body = split_frontmatter(source_text)
@@ -46,13 +41,13 @@ def metadata_for(name: str, source_name: str, source_text: str) -> str:
             title = first_heading(body, name)
             lines.append(
                 "description: "
-                + yaml_quote(f"AI Berkshire skill: {title}. Source: skills/{source_name}.")
+                + yaml_quote(f"AI Berkshire Skill: {title}（原本: skills/{source_name}）")
             )
         lines.append(existing.rstrip())
         return "---\n" + "\n".join(lines) + "\n---\n\n"
 
     title = first_heading(source_text, name)
-    description = f"AI Berkshire skill: {title}. Source: skills/{source_name}."
+    description = f"AI Berkshire Skill: {title}（原本: skills/{source_name}）"
     return (
         "---\n"
         f"name: {name}\n"
@@ -60,28 +55,24 @@ def metadata_for(name: str, source_name: str, source_text: str) -> str:
         "---\n\n"
     )
 
-
 def codex_body(name: str, source_name: str, source_text: str) -> str:
     _, body = split_frontmatter(source_text)
     note = (
-        "## Codex adapter note\n\n"
-        f"This skill is generated from `skills/{source_name}` so Claude Code "
-        "and Codex users share one canonical workflow.\n\n"
-        "- Treat `$ARGUMENTS` as the user's request in the current Codex thread.\n"
-        "- When the source mentions Claude-only surfaces such as Task, Agent, "
-        "WebSearch, Bash, Read, or Write, use the closest Codex capability "
-        "available in this session: subagents when available, web search when "
-        "needed, shell commands for local tools, and normal file edits for "
-        "workspace files.\n"
-        "- Use shared project tools from `tools/` in this repository. Commands "
-        "that reference `~/ai-berkshire/tools/...` assume the repo is checked "
-        "out at `~/ai-berkshire`; if needed, prefer the current workspace path.\n"
-        "- Preserve the research quality rules from `AGENTS.md`: cross-check "
-        "financial data, use exact arithmetic tools for valuation/math, and "
-        "clearly label uncertainty and source gaps.\n\n"
+        "## Codexアダプター注記\n\n"
+        f"このSkillは`skills/{source_name}`から生成され、Claude CodeとCodexで"
+        "同じ正本のワークフローを共有する。\n\n"
+        "- `$ARGUMENTS`は、現在のCodexスレッドで受け取ったユーザーの依頼として扱う。\n"
+        "- 正本がTask、Agent、WebSearch、Bash、Read、WriteなどClaude Code固有の機能を"
+        "参照する場合は、このセッションで利用できる最も近いCodex機能へ置き換える。"
+        "必要に応じてサブエージェント、Web検索、ローカルツール実行用のシェルコマンド、"
+        "ワークスペース内の通常のファイル編集を使う。\n"
+        "- 共通ツールは本リポジトリの`tools/`から使用する。"
+        "`~/ai-berkshire/tools/...`を参照するコマンドは、リポジトリを"
+        "`~/ai-berkshire`へチェックアウトした前提である。必要なら現在のワークスペースのパスを優先する。\n"
+        "- `AGENTS.md`の調査品質規則を維持する。財務データを照合し、"
+        "評価と計算には精密計算ツールを使い、不確実性と情報源の不足を明示する。\n\n"
     )
     return note + body.rstrip() + "\n"
-
 
 def main() -> None:
     check = "--check" in sys.argv[1:]
@@ -121,7 +112,6 @@ def main() -> None:
         return
 
     print(f"Generated {count} Codex skills in {CODEX_SKILLS.relative_to(ROOT)}")
-
 
 if __name__ == "__main__":
     main()

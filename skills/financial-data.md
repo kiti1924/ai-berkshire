@@ -1,103 +1,113 @@
-# 财务数据获取与交叉验证规范
+# 財務データ取得・クロスチェック規程
 
-本规范适用于所有涉及企业财务数据的研究。**每个关键数据必须来自两个独立来源，误差>1%须标记。**
-
----
-
-## 数据源优先级
-
-### 美股（PDD、腾讯ADR、网易ADR等）
-
-| 优先级 | 来源 | URL | 获取方式 |
-|--------|------|-----|---------|
-| 1（主） | **macrotrends** | macrotrends.net/stocks/charts/{ticker} | 直接访问，无需注册 |
-| 2（副） | **stockanalysis** | stockanalysis.com/stocks/{ticker}/financials | 直接访问，无需注册 |
-| 原始一手 | SEC EDGAR | sec.gov/cgi-bin/browse-edgar | 10-K / 10-Q 原文 |
-
-### 港股（腾讯0700、网易9999、美团3690等）
-
-| 优先级 | 来源 | URL | 获取方式 |
-|--------|------|-----|---------|
-| 1（主） | **aastocks** | aastocks.com/tc/stocks/analysis/company-fundamental | 直接访问 |
-| 2（副） | **macrotrends**（ADR代码） | 腾讯用TCEHY，网易用NTES | 直接访问 |
-| 原始一手 | HKEX披露易 | hkexnews.hk | 年报PDF |
-
-### A股（三七互娱、吉比特等）
-
-| 优先级 | 来源 | URL | 获取方式 |
-|--------|------|-----|---------|
-| 1（主） | **东方财富** | eastmoney.com → 搜股票代码 → 财务报表 | 直接访问 |
-| 2（副） | **巨潮资讯** | cninfo.com.cn | 原始年报/季报PDF |
+本規程は、企業の財務データを扱うすべての調査に適用する。**重要データはそれぞれ2つの独立した情報源で確認し、差異が1%を超える場合は明示すること。**
 
 ---
 
-## 执行规范
+## 情報源の優先順位
 
-### 第一步：获取数据
+### 米国株（PDD、Tencent ADR、NetEase ADRなど）
 
-对每个财务指标（收入、净利润、毛利率、经营现金流、资产负债率等），分别从**来源1**和**来源2**取数。
+| 優先順位 | 情報源 | URL | 取得方法 |
+|---|---|---|---|
+| 1（主） | **macrotrends** | macrotrends.net/stocks/charts/{ticker} | 登録不要で直接アクセス |
+| 2（副） | **stockanalysis** | stockanalysis.com/stocks/{ticker}/financials | 登録不要で直接アクセス |
+| 一次資料 | SEC EDGAR | sec.gov/cgi-bin/browse-edgar | 10-K / 10-Qの原文 |
 
-### 第二步：误差计算与标记
+### 香港株（Tencent 0700、NetEase 9999、Meituan 3690など）
 
+| 優先順位 | 情報源 | URL | 取得方法 |
+|---|---|---|---|
+| 1（主） | **aastocks** | aastocks.com/tc/stocks/analysis/company-fundamental | 直接アクセス |
+| 2（副） | **macrotrends**（ADR ticker） | TencentはTCEHY、NetEaseはNTES | 直接アクセス |
+| 一次資料 | HKEXnews（披露易） | hkexnews.hk | 年次報告書PDF |
+
+### 中国A株（37 Interactive Entertainment、G-bitsなど）
+
+| 優先順位 | 情報源 | URL | 取得方法 |
+|---|---|---|---|
+| 1（主） | **Eastmoney（东方财富）** | eastmoney.com → 銘柄コードを検索 → 財務諸表 | 直接アクセス |
+| 2（副） | **CNINFO（巨潮资讯）** | cninfo.com.cn | 年次報告書・四半期報告書の原文PDF |
+
+---
+
+## 実行手順
+
+### 手順1：データを取得する
+
+売上高、純利益、売上総利益率、営業キャッシュフロー、負債比率など、各財務指標について**情報源1**と**情報源2**から個別に数値を取得する。
+
+### 手順2：差異率を計算し、判定する
+
+```text
+差異率 = |情報源1の数値 - 情報源2の数値| / |情報源1の数値| × 100%
 ```
-误差率 = |来源1数值 - 来源2数值| / 来源1数值 × 100%
+
+| 差異率 | 対応 |
+|---|---|
+| ≤ 1% | ✅ 一致。情報源1の数値を採用し、両方の情報源を記載する |
+| 1%超～5% | ⚠️ 「データに差異あり」と明記し、両方の数値と想定原因（為替・会計上の定義など）を示す |
+| > 5% | ❌ 「データに重大な差異あり」と明記する。一次資料で確認するまで、そのまま使用してはならない |
+
+分母が0または0に近い場合は差異率だけで判定せず、絶対差と指標の性質を併記する。
+
+### 手順3：所定の形式で表示する
+
+重要データには、通貨、単位、対象期間、会計基準、基準日を付け、次の形式で示す。
+
+```text
+売上高：1,239億元（CNY、FY2025） ✅
+  - macrotrends：1,241億元（CNY）
+  - stockanalysis：1,237億元（CNY）
+  - 差異率：0.3%
 ```
 
-| 误差 | 处理方式 |
-|------|---------|
-| ≤ 1% | ✅ 一致，取来源1数值，标注两个来源 |
-| 1% ~ 5% | ⚠️ 标记"数据存在差异"，注明两个数值，说明可能原因（汇率/会计口径） |
-| > 5% | ❌ 标记"数据存在重大差异"，必须查原始财报核实，不得直接使用 |
+差異がある場合の例：
 
-### 第三步：数据呈现格式
-
-每个关键数据必须按以下格式标注：
-
-```
-收入：1,239亿元 ✅
-  - macrotrends: 1,241亿元
-  - stockanalysis: 1,237亿元
-  - 误差: 0.3%
-```
-
-差异示例：
-```
-净利润：245亿元 ⚠️ 数据存在差异
-  - macrotrends: 245亿元（GAAP）
-  - stockanalysis: 278亿元（Non-GAAP）
-  - 误差: 13.5% — 原因：会计口径不同（GAAP vs Non-GAAP）
+```text
+純利益：245億元（CNY、FY2025） ⚠️ データに差異あり
+  - macrotrends：245億元（CNY、GAAP）
+  - stockanalysis：278億元（CNY、Non-GAAP）
+  - 差異率：13.5%
+  - 想定原因：会計上の定義が異なる（GAAPとNon-GAAP）
 ```
 
 ---
 
-## 常见差异原因（不一定是数据错误）
+## よくある差異の原因
 
-| 原因 | 说明 |
-|------|------|
-| GAAP vs Non-GAAP | 最常见，尤其是利润类数据 |
-| 汇率换算 | 港币/人民币/美元换算时间点不同 |
-| 财年定义 | 自然年 vs 财年（如苹果财年10月结束） |
-| 合并口径 | 是否含少数股东权益 |
-| 数据更新滞后 | 某平台尚未更新最新一期财报 |
+差異があっても、必ずしもデータ自体が誤っているとは限らない。
 
----
-
-## 特别规则
-
-1. **未上市公司**（米哈游、莉莉丝等）：只有一手数据来源时，数据前标记 `[估计]`，不执行交叉验证
-2. **季度数据 vs 年度数据**：优先使用年度数据做交叉验证，季度数据部分来源可能有滞后
-3. **原始财报优先**：若两个来源均与原始财报（10-K/年报PDF）不符，以原始财报为准，标记来源错误
+| 原因 | 説明 |
+|---|---|
+| GAAPとNon-GAAP | 特に利益指標で頻繁に生じる |
+| 為替換算 | HKD、CNY、USDの換算レートや換算時点が異なる |
+| 会計年度の定義 | 暦年と企業独自の会計年度が異なる。例：Appleの会計年度は9月末前後に終了する |
+| 連結範囲 | 非支配持分や持分法適用会社の扱いが異なる |
+| データ更新の遅れ | 一方のサービスが最新の決算をまだ反映していない |
+| 株式分割・ADR比率 | 分割調整やADRと原株の換算比率が異なる |
+| 継続事業と全社 | 非継続事業を含むかどうかが異なる |
 
 ---
 
-## 快速索引
+## 特則
 
-| 场景 | 主要来源 | 备用来源 |
-|------|---------|---------|
-| PDD / 拼多多 | macrotrends.net/stocks/charts/PDD | stockanalysis.com/stocks/pdd |
-| 腾讯 | macrotrends.net/stocks/charts/TCEHY | aastocks（0700.HK） |
-| 网易 | macrotrends.net/stocks/charts/NTES | aastocks（9999.HK） |
-| 三七互娱 | eastmoney.com（002555） | cninfo.com.cn |
-| 吉比特 | eastmoney.com（603444） | cninfo.com.cn |
+1. **未上場企業**（miHoYo、Lilith Gamesなど）：一次情報が1つしかない場合は、データの前に`[推定]`または`[単一情報源]`と記載し、クロスチェック済みと扱わない。
+2. **四半期データと年度データ**：クロスチェックでは年度データを優先する。四半期データは情報源によって更新が遅れる場合がある。
+3. **一次資料を優先**：2つの二次情報源が10-K、年次報告書などの一次資料と一致しない場合は、一次資料を正本とし、二次情報源の相違を明記する。
+4. **通貨と単位**：`亿元`を「億円」と解釈してはならない。人民元なら「億元（CNY）」、香港ドルなら「億HKD」など、通貨を明示する。
+5. **期間と会計基準**：年度実績、四半期実績、TTM、会社予想、市場予想を混同しない。GAAP、IFRS、Non-GAAPも明示する。
+
+---
+
+## クイックリファレンス
+
+| 対象 | 主な情報源 | 代替情報源 |
+|---|---|---|
+| PDD / Pinduoduo | macrotrends.net/stocks/charts/PDD | stockanalysis.com/stocks/pdd |
+| Tencent | macrotrends.net/stocks/charts/TCEHY | aastocks（0700.HK） |
+| NetEase | macrotrends.net/stocks/charts/NTES | aastocks（9999.HK） |
+| 37 Interactive Entertainment | eastmoney.com（002555） | cninfo.com.cn |
+| G-bits | eastmoney.com（603444） | cninfo.com.cn |
 | Nintendo | macrotrends.net/stocks/charts/NTDOY | stockanalysis.com/stocks/ntdoy |
 | Capcom | macrotrends（CCOEY） | stockanalysis（CCOEY） |

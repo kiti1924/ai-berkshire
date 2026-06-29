@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 巴菲特价值投资买入前 Checklist."
+description: "AI Berkshireのスラッシュエントリ：バフェット流・購入前投資チェックリスト。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `investment-checklist` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `investment-checklist`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/investment-checklist/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/investment-checklist/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

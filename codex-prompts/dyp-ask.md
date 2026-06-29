@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 段永平问答：以他的方式思考."
+description: "AI Berkshireのスラッシュエントリ：段永平式Q&A：その思考法で考える。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `dyp-ask` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `dyp-ask`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/dyp-ask/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/dyp-ask/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

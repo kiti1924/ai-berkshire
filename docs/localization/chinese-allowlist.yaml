@@ -1,0 +1,131 @@
+version: 1
+
+default_policy:
+  new_user_facing_output: japanese_required
+  unclassified_chinese_text: disallowed
+  existing_legacy_reports: preserve_unless_explicitly_requested
+
+categories:
+  formal_company_names:
+    description: 企業登記名、証券開示上の正式名称、検索時に必要な原文社名。
+    match_type: exact
+    values:
+      - 腾讯控股有限公司
+      - 拼多多
+      - 贵州茅台酒股份有限公司
+      - 美团
+      - 快手科技
+      - 泡泡玛特国际集团有限公司
+    reason: 正式名称の同一性と中国語情報源の検索精度を維持するため。
+    scope:
+      - source_metadata
+      - search_queries
+      - first_mention_with_japanese_explanation
+
+  external_api_values:
+    description: 外部API、fixture、取引所データが返す中国語の列名または値。
+    match_type: field_scoped
+    allowed_fields:
+      - raw_value
+      - raw_label
+      - source_payload
+      - fixture_expected_value
+    reason: 外部仕様との一致と既存fixtureの後方互換性を維持するため。
+    scope:
+      - data
+      - tools
+      - test_fixtures
+    restrictions:
+      - 日本語の説明用ラベルとして新規採用しない。
+      - 変換後の表示値とは別に原値として保持する。
+
+  chinese_search_terms:
+    description: 中国語圏の一次資料、規制情報、投資情報を検索するための語句。
+    match_type: exact
+    values:
+      - 财报
+      - 年报
+      - 季报
+      - 归母净利润
+      - 股本
+      - 港股
+      - A股
+      - 巨潮资讯
+      - 港交所公告
+      - 东方财富
+      - 同花顺
+      - 雪球
+      - 公众号
+    reason: 中国語情報源の検索再現性を維持するため。
+    scope:
+      - search_queries
+      - source_discovery_notes
+    restrictions:
+      - 最終出力では日本語で意味を説明する。
+
+  original_quotes:
+    description: 一次資料、経営者発言、法定開示からの原文引用。
+    match_type: explicit_context
+    allowed_contexts:
+      - markdown_blockquote
+      - field_named_original_quote
+      - section_named_original_text
+    reason: 引用の正確性と原資料との照合可能性を維持するため。
+    scope:
+      - reports
+      - research_notes
+    restrictions:
+      - 引用であることと出典を明示する。
+      - 必要に応じて直後に日本語訳または要約を付ける。
+      - 引用外の本文へ無制限に適用しない。
+
+  source_titles:
+    description: 法定開示、記事、書籍、動画、公式発表の中国語原題。
+    match_type: explicit_field
+    allowed_fields:
+      - source_title
+      - original_title
+      - citation_title
+    reason: 出典の識別性と検索可能性を維持するため。
+    scope:
+      - citations
+      - bibliographies
+      - source_metadata
+    restrictions:
+      - 本文の説明は日本語にする。
+
+  legacy_report_parser_tokens:
+    description: 既存中国語レポートを解析するために必要な見出し、単位、会計用語。
+    match_type: exact
+    values:
+      - 亿元
+      - 万亿
+      - 人民币
+      - 港元
+      - 美元
+      - 市值
+      - 营业收入
+      - 净利润
+      - 归母净利润
+      - 毛利率
+      - 净利率
+      - 资产负债率
+      - 经营现金流
+      - 自由现金流
+      - 管理层
+      - 护城河
+      - 估值
+    reason: tools/report_audit.py等による旧レポート解析を維持するため。
+    scope:
+      - tools
+      - parser_rules
+      - legacy_reports
+    restrictions:
+      - 新規ユーザー向け見出しの既定値にはしない。
+      - 亿元と万亿は通貨確認後に日本語表記へ変換する。
+
+prohibited_patterns:
+  - pattern: ".*"
+    reason: 全中国語を無条件に許可する広すぎる規則は禁止する。
+  - pattern: "[\\u3400-\\u9fff]+"
+    reason: CJK文字全体を許可すると日本語化漏れを検出できないため禁止する。

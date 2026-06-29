@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 投资论文追踪：买入后的纪律系统."
+description: "AI Berkshireのスラッシュエントリ：投資仮説トラッカー：購入後の規律を保つ。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `thesis-tracker` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `thesis-tracker`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/thesis-tracker/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/thesis-tracker/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

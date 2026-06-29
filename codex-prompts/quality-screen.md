@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 去劣筛选：7条指标快速排除非一流公司."
+description: "AI Berkshireのスラッシュエントリ：低品質企業の除外：7指標で一流ではない企業を素早くふるい落とす。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `quality-screen` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `quality-screen`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/quality-screen/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/quality-screen/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

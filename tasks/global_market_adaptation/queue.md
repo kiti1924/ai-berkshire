@@ -11,10 +11,10 @@
 | 3 | `gma-03-security-resolution` | Security resolution and market routing | `completed` | Goal 2 |
 | 4 | `gma-04-access-policy` | Access policy, retrieval, and cache | `completed` | Goal 1, Goal 2 |
 | 5 | `gma-05-fact-snapshot` | Fact snapshot and financial validation | `completed` | Goal 2, Goal 4 |
-| 6 | `gma-06-us-adapter` | US market adapter | `pending` | Goal 3, Goal 4, Goal 5 |
-| 7 | `gma-07-japan-adapter` | Japan market adapter | `pending` | Goal 3, Goal 4, Goal 5 |
-| 8 | `gma-08-shanghai-adapter` | Shanghai A market adapter | `pending` | Goal 3, Goal 4, Goal 5 |
-| 9 | `gma-09-hongkong-adapter` | Hong Kong market adapter | `pending` | Goal 3, Goal 4, Goal 5 |
+| 6 | `gma-06-us-adapter` | US market adapter | `completed` | Goal 3, Goal 4, Goal 5 |
+| 7 | `gma-07-japan-adapter` | Japan market adapter | `completed` | Goal 3, Goal 4, Goal 5 |
+| 8 | `gma-08-shanghai-adapter` | Shanghai A market adapter | `completed` | Goal 3, Goal 4, Goal 5 |
+| 9 | `gma-09-hongkong-adapter` | Hong Kong market adapter | `completed` | Goal 3, Goal 4, Goal 5 |
 | 10 | `gma-10-agent-methodology` | Agent methodology integration | `pending` | Goal 5, Goal 6, Goal 7, Goal 8, Goal 9 |
 | 11 | `gma-11-skill-integration` | Skill and Codex workflow integration | `pending` | Goal 1, Goal 3..10 |
 | 12 | `gma-12-reports-audit` | Reports, audit, and degraded operation | `pending` | Goal 5, Goal 10, Goal 11 |

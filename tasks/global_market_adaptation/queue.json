@@ -85,7 +85,7 @@
       "name": "gma-06-us-adapter",
       "title": "US market adapter",
       "dependencies": [3, 4, 5],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "USMarketAdapter実装（SEC EDGAR, 10-K/10-Q/8-K等）",
         "米国固有分析（SBC, dilution, buyback net, goodwill）",
@@ -97,7 +97,7 @@
       "name": "gma-07-japan-adapter",
       "title": "Japan market adapter",
       "dependencies": [3, 4, 5],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "JapanMarketAdapter実装（EDINET, TDnet, JPX, CG報告書, IR）",
         "日本固有分析（村上世彰型・藤野英人型ポイント抽出）",
@@ -109,7 +109,7 @@
       "name": "gma-08-shanghai-adapter",
       "title": "Shanghai A market adapter",
       "dependencies": [3, 4, 5],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "ShanghaiAMarketAdapter実装（SSE公告, 定期報告, 会社IR）",
         "上海A株固有分析（SOE/民営, 実質支配者, 関連取引, 株式質権）"
@@ -120,7 +120,7 @@
       "name": "gma-09-hongkong-adapter",
       "title": "Hong Kong market adapter",
       "dependencies": [3, 4, 5],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "HongKongMarketAdapter実装（HKEXnews, 5桁コード, 持分開示）",
         "香港固有分析（支配株主, 接続取引, 第三者割当, H株/レッドチップ）"

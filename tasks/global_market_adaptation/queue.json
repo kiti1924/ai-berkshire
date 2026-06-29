@@ -1,0 +1,175 @@
+{
+  "project": "AI-BERKSHIRE-GLOBAL-MARKET-ADAPTATION",
+  "version": "1.0.0",
+  "updated_at": "2026-06-29T20:14:45+09:00",
+  "goals": [
+    {
+      "id": 0,
+      "name": "gma-00-foundation",
+      "title": "Foundation and task contracts",
+      "dependencies": [],
+      "status": "completed",
+      "acceptance_criteria": [
+        "上位仕様と下位仕様の参照関係が明確",
+        "Goal 0–13の依存関係が循環しない",
+        "仕様要件が少なくとも1つのGoalへ割り当てられている",
+        "queue.jsonとqueue.mdの内容が一致",
+        "canonical IDの重複・表記ゆれを検出できる",
+        "既存Skill・生成物へ意図しない差分がない",
+        "文書検査、JSON parse、git diff --checkが成功"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "gma-01-installation",
+      "title": "Installation and packaging compatibility",
+      "dependencies": [0],
+      "status": "completed",
+      "acceptance_criteria": [
+        "元のリポジトリと同じ導入操作を維持",
+        "AI_BERKSHIRE_HOME導入とOS別既定パス実装",
+        "install-manifest.json導入と冪等再インストール保証",
+        "EDINET_API_KEYなしでのinstall成功"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "gma-02-contracts",
+      "title": "Canonical data contracts",
+      "dependencies": [0],
+      "status": "completed",
+      "acceptance_criteria": [
+        "Security, Document, Fact, Evidence, Research Run schema作成",
+        "timezone-aware datetime要求と適正検証",
+        "verification_status canonical enum化"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "gma-03-security-resolution",
+      "title": "Security resolution and market routing",
+      "dependencies": [2],
+      "status": "completed",
+      "acceptance_criteria": [
+        "SecurityResolverおよびMarketRouter実装",
+        "US, JP, CN_SH_A, HK の4市場判定解決",
+        "ADRと原株の分離識別"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "gma-04-access-policy",
+      "title": "Access policy, retrieval, and cache",
+      "dependencies": [1, 2],
+      "status": "completed",
+      "acceptance_criteria": [
+        "domain別rate limitおよび並列数制御実装",
+        "Retry-After尊重および403/429/503バックオフ処理",
+        "cache-firstおよび取得・更新機構実装"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "gma-05-fact-snapshot",
+      "title": "Fact snapshot and financial validation",
+      "dependencies": [2, 4],
+      "status": "completed",
+      "acceptance_criteria": [
+        "FactSnapshotおよびEvidence-on-use実装",
+        "主要財務計算（時価総額, EV, PER, PBR, ROE, FCF等）の厳密再計算",
+        "全Agentでの共通Snapshot参照API提供"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "gma-06-us-adapter",
+      "title": "US market adapter",
+      "dependencies": [3, 4, 5],
+      "status": "completed",
+      "acceptance_criteria": [
+        "USMarketAdapter実装（SEC EDGAR, 10-K/10-Q/8-K等）",
+        "米国固有分析（SBC, dilution, buyback net, goodwill）",
+        "APIキー不要の無料無料経路動作"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "gma-07-japan-adapter",
+      "title": "Japan market adapter",
+      "dependencies": [3, 4, 5],
+      "status": "completed",
+      "acceptance_criteria": [
+        "JapanMarketAdapter実装（EDINET, TDnet, JPX, CG報告書, IR）",
+        "日本固有分析（村上世彰型・藤野英人型ポイント抽出）",
+        "EDINET_API_KEY未設定時の安全な劣化動作"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "gma-08-shanghai-adapter",
+      "title": "Shanghai A market adapter",
+      "dependencies": [3, 4, 5],
+      "status": "completed",
+      "acceptance_criteria": [
+        "ShanghaiAMarketAdapter実装（SSE公告, 定期報告, 会社IR）",
+        "上海A株固有分析（SOE/民営, 実質支配者, 関連取引, 株式質権）"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "gma-09-hongkong-adapter",
+      "title": "Hong Kong market adapter",
+      "dependencies": [3, 4, 5],
+      "status": "completed",
+      "acceptance_criteria": [
+        "HongKongMarketAdapter実装（HKEXnews, 5桁コード, 持分開示）",
+        "香港固有分析（支配株主, 接続取引, 第三者割当, H株/レッドチップ）"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "gma-10-agent-methodology",
+      "title": "Agent methodology integration",
+      "dependencies": [5, 6, 7, 8, 9],
+      "status": "completed",
+      "acceptance_criteria": [
+        "標準4 Agentへの日本人投資家2レンズの正式混合",
+        "深掘り2 Agent (governance_allocator, management_organization) 独立起動実装",
+        "「モート」用語統一の維持"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "gma-11-skill-integration",
+      "title": "Skill and Codex workflow integration",
+      "dependencies": [1, 3, 4, 5, 6, 7, 8, 9, 10],
+      "status": "completed",
+      "acceptance_criteria": [
+        "既存Skill（investment-research等）へのSecurity Resolver・Market Router統合",
+        "Codex SkillおよびPromptの同期再生成と一致検証"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "gma-12-reports-audit",
+      "title": "Reports, audit, and degraded operation",
+      "dependencies": [5, 10, 11],
+      "status": "completed",
+      "acceptance_criteria": [
+        "標準レポートおよび詳細アーティファクト出力パス実装",
+        "report audit 4市場対応および根拠追跡・秘密情報遮断"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "gma-13-final-acceptance",
+      "title": "End-to-end acceptance and final review",
+      "dependencies": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "status": "completed",
+      "acceptance_criteria": [
+        "上位仕様全31項目の受入条件チェックパス",
+        "4市場E2Eテストおよび品質ゲートチェック完了"
+      ]
+    }
+  ]
+}

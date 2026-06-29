@@ -1,0 +1,65 @@
+version: 1
+
+# 新規のユーザー向け出力に適用する既定値。
+output_language: ja
+locale: ja-JP
+timezone: Asia/Tokyo
+writing_style: da-dearu
+
+writing_policy:
+  conclusion_first: true
+  concise_sentences: true
+  avoid_machine_translation_tone: true
+  avoid_repetition: true
+  preserve_domain_specific_wording: true
+
+research_policy:
+  distinguish_claim_types:
+    - fact
+    - company_statement
+    - market_consensus
+    - calculated_estimate
+    - analytical_assumption
+    - analyst_assessment
+    - unverified_information
+  require_source_attribution: true
+  require_counterarguments_for_core_judgments: true
+  state_uncertainty_explicitly: true
+
+financial_notation:
+  require_currency: true
+  require_unit: true
+  require_data_as_of: true
+  require_accounting_period: true
+  require_accounting_standard: true
+  distinguish_actual_forecast_estimate: true
+  distinguish_basic_diluted_share_count: true
+  prohibit_unlabeled_currency_conversion: true
+
+source_language_policy:
+  searchable_languages:
+    - ja
+    - en
+    - zh
+  final_output_language: ja
+  preserve_original_source_title: true
+  preserve_original_quotes: true
+  add_japanese_explanation_to_non_japanese_sources: true
+
+identifier_policy:
+  preserve_original_when_required:
+    - file_name
+    - function_name
+    - command
+    - api_name
+    - json_key
+    - ticker
+    - exchange_code
+    - external_specification_value
+
+legacy_compatibility:
+  parse_existing_chinese_reports: true
+  allow_chinese_search_terms: true
+  allowlist: docs/localization/chinese-allowlist.yaml
+  glossary: docs/localization/glossary.md
+  bulk_translate_existing_reports: false

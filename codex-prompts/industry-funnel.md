@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 行业漏斗筛选：从全市场到 3 家的价值投资精选流程."
+description: "AI Berkshireのスラッシュエントリ：業界funnel screening：全市場から3社へ絞る価値投資process。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `industry-funnel` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `industry-funnel`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/industry-funnel/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/industry-funnel/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

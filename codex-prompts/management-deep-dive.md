@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 管理层纵深研究：买股票就是买人."
+description: "AI Berkshireのスラッシュエントリ：経営陣の深掘り：株式を通じて誰へ資本を託すか。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `management-deep-dive` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `management-deep-dive`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/management-deep-dive/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/management-deep-dive/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

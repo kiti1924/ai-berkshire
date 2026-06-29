@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 财务数据获取与交叉验证规范."
+description: "AI Berkshireのスラッシュエントリ：財務データ取得・クロスチェック規程。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `financial-data` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `financial-data`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/financial-data/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/financial-data/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

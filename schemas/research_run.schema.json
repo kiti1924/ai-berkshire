@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ResearchRun",
+  "type": "object",
+  "required": [
+    "run_id",
+    "started_at",
+    "query",
+    "resolved_security_id",
+    "market_id",
+    "mode",
+    "as_of",
+    "skill",
+    "documents_used",
+    "facts_used",
+    "warnings",
+    "status"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "started_at": { "type": "string" },
+    "completed_at": { "type": ["string", "null"] },
+    "query": { "type": "string" },
+    "resolved_security_id": { "type": "string" },
+    "market_id": { "type": "string", "enum": ["US", "JP", "CN_SH_A", "HK"] },
+    "mode": { "type": "string", "enum": ["on_demand", "on_demand_cached"] },
+    "as_of": { "type": "string" },
+    "skill": { "type": "string" },
+    "documents_used": { "type": "array", "items": { "type": "string" } },
+    "facts_used": { "type": "array", "items": { "type": "string" } },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "status": { "type": "string", "enum": ["completed", "partial", "failed"] }
+  },
+  "additionalProperties": false
+}

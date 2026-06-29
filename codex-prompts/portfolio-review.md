@@ -1,11 +1,11 @@
 ---
-description: "AI Berkshire slash entry for 组合管理：从\"研究公司\"到\"管理组合\"."
+description: "AI Berkshireのスラッシュエントリ：ポートフォリオ・レビュー：企業調査から資産配分へ。"
 argument-hint: $ARGUMENTS
 ---
 
-Use the installed AI Berkshire Codex skill `portfolio-review` for this request.
+この依頼には、導入済みのAI Berkshire Codex Skill `portfolio-review`を使用する。
 
-If the skill is not already loaded, read and follow `~/ai-berkshire/codex-skills/portfolio-review/SKILL.md`.
+Skillがまだ読み込まれていない場合は、`~/ai-berkshire/codex-skills/portfolio-review/SKILL.md`を読み、その指示に従う。
 
-User arguments:
+ユーザー引数：
 $ARGUMENTS

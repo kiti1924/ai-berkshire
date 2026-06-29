@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
-"""Report Audit Tool for AI Berkshire.
+"""AI Berkshire向けレポート監査ツール。
 
-数据抽检工具：从研究报告中抽取15%的财务数据点，与可靠信源比对，
-通过则准出，不通过则打回并说明原因。
+調査レポートから財務データ点の15%を抽出し、信頼できる情報源との照合結果を
+判定する。すべて合格なら公開可、不一致があれば差し戻し理由を表示する。
 
-Zero external dependencies — uses only Python stdlib.
-Requires Python >= 3.7.
+外部依存はなく、Python標準ライブラリのみを使用する。Python 3.7以上が必要。
 
-工作流程（三步）：
-  Step 1 — 提取数据点，随机抽样15%：
-    python3 tools/report_audit.py extract --report reports/xxx.md
+3段階の処理：
+  1. データ点を抽出し、15%を無作為抽出する。
+     python3 tools/report_audit.py extract --report reports/xxx.md
 
-  Step 2 — Claude 对抽检清单中的每个数据点，从可靠信源（macrotrends/
-            stockanalysis/aastocks/eastmoney）取数，填入 fetched_value
+  2. 抽出した各データ点を信頼できる情報源で確認し、
+     fetched_valueなどのJSONフィールドへ入力する。
 
-  Step 3 — 输入核验结果，输出准出/打回判决：
-    python3 tools/report_audit.py verdict --results '[...]'
+  3. 確認結果を入力し、公開可／差し戻しを判定する。
+     python3 tools/report_audit.py verdict --results '[...]'
 
-  一步完成（仅提取+打印抽检清单，不做网络验证）：
-    python3 tools/report_audit.py extract --report reports/xxx.md --dry-run
+  抽出結果だけを確認する場合：
+     python3 tools/report_audit.py extract --report reports/xxx.md --dry-run
 """
 
 import argparse
@@ -30,40 +29,60 @@ import sys
 from decimal import Decimal, Context, ROUND_HALF_EVEN
 from random import Random
 
+
+def _configure_text_streams() -> None:
+    """現在の端末encodingを維持しつつ、表示不能文字でCLIを停止させない。"""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:
+            continue
+        try:
+            reconfigure(errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
+
 _CTX = Context(prec=28, rounding=ROUND_HALF_EVEN)
 
 # ---------------------------------------------------------------------------
-# 数据点提取：从 Markdown 报告中识别财务数字
+# データ点抽出：Markdownレポート内の財務数値を識別する
 # ---------------------------------------------------------------------------
 
-# 匹配模式：数字 + 单位，前面有上下文标签
-# 例：收入：1,239亿元、PE 18.8x、毛利率 56%、市值 ~$5,670亿
+# 中国語の旧レポートと日本語レポートを同じ抽出器で扱う。
+# 長い単位を先に並べ、`亿元`を`亿`、`億香港ドル`を`億`として誤って
+# 部分一致させない。抽出後も原単位を保持し、通貨を推測で変換しない。
+_UNIT_PATTERN = (
+    r'(?:万亿(?:人民币|港元|美元)?|亿元|亿人民币|亿港元|亿美元|'
+    r'百万股|亿股|万股|亿|'
+    r'億香港ドル|億米ドル|億人民元|億ドル|億円|億元|'
+    r'百万株|億株|万株|千株|株|億|'
+    r'兆(?:香港ドル|米ドル|人民元|ドル|円|CNY|HKD|USD|JPY)?|'
+    r'[xX倍]|%|[BMT])'
+)
+_APPROX_PATTERN = r'[~约約]?'
+
+# 個別パターンは外部利用との互換性のため残す。
 _PATTERNS = [
-    # 百分比
-    (r'([\d,，\.]+)\s*%',                        '%',    'percent'),
-    # 亿元/亿美元/亿港元
-    (r'([\d,，\.]+)\s*亿(元|美元|港元|RMB|USD|HKD)?', '亿',    'hundred_million'),
-    # 倍数 PE/PB/PS
-    (r'([\d,，\.]+)\s*[xX倍]',                   'x',    'multiple'),
-    # 万亿
-    (r'([\d,，\.]+)\s*万亿',                      '万亿', 'trillion'),
-    # 美元绝对值（B/T）
-    (r'\$\s*([\d,，\.]+)\s*([BMT亿])',             '$',    'usd_abs'),
-    # 纯整数（如市值、收入、用户数等，出现在表格 | 里）
-    (r'\|\s*[~约]?\$?([\d,，\.]+)\s*\|',          '',     'table_num'),
+    (r'([\d,，\.]+)\s*%', '%', 'percent'),
+    (rf'([\d,，\.]+)\s*({_UNIT_PATTERN})', '', 'amount'),
+    (r'([\d,，\.]+)\s*[xX倍]', 'x', 'multiple'),
+    (r'\$\s*([\d,，\.]+)\s*([BMT])', '$', 'usd_abs'),
+    (rf'\|\s*{_APPROX_PATTERN}\$?([\d,，\.]+)\s*\|', '', 'table_num'),
 ]
 
 _LABEL_RE = re.compile(
-    r'(?P<label>[^\|\n：:]{2,25})[：:\s]+[~约]?\$?(?P<num>[\d,，\.]+)\s*(?P<unit>亿[元美港]?元?|万亿|[xX倍]|%|[BMT])?'
+    rf'(?P<label>[^\|\n：:]{{2,25}})[：:\s]+{_APPROX_PATTERN}\$?'
+    rf'(?P<num>[\d,，\.]+)\s*(?P<unit>{_UNIT_PATTERN})?'
 )
 
 _TABLE_ROW_RE = re.compile(
-    r'\|\s*(?P<label>[^|]{1,40})\s*\|\s*[~约]?\$?(?P<num>[\d,，\.]+)\s*(?P<unit>亿[元美港]?元?|万亿|[xX倍]|%|[BMT])?\s*\|'
+    rf'\|\s*(?P<label>[^|]{{1,40}})\s*\|\s*{_APPROX_PATTERN}\$?'
+    rf'(?P<num>[\d,，\.]+)\s*(?P<unit>{_UNIT_PATTERN})?\s*\|'
 )
 
 
 def _clean_num(s: str) -> float:
-    """把带逗号、中文逗号的数字字符串转为 float。"""
+    """カンマまたは全角カンマを含む数値文字列をfloatへ変換する。"""
     s = s.replace(',', '').replace('，', '').strip()
     try:
         return float(s)
@@ -72,58 +91,63 @@ def _clean_num(s: str) -> float:
 
 
 def _is_valid_label(label: str) -> bool:
-    """判断标签是否是有意义的财务字段名，过滤噪声。"""
+    """財務項目として意味のあるラベルかを判定し、ノイズを除外する。"""
     label = label.strip()
-    # 太短
+    # 短すぎるラベル
     if len(label) < 2:
         return False
-    # 纯数字或纯年份
+    # 数字または年・四半期だけのラベル
     if re.fullmatch(r'[\d\s年季度Q]+', label):
         return False
-    # 以符号/markdown标记开头
+    # 記号またはMarkdown記号から始まるラベル
     if re.match(r'^[+\-\*#\|~\$>_`]', label):
         return False
-    # 含有 markdown 粗体/代码标记
+    # Markdownの太字・コード記号を含むラベル
     if '**' in label or '`' in label or '__' in label:
         return False
-    # 标签含有纯增速符号（如 +56%、-13% 单独作标签）
+    # 増減率だけのラベル（例：+56%、-13%）
     if re.fullmatch(r'[+\-]?\d+(\.\d+)?%', label):
         return False
-    # 常见无意义标签
-    _SKIP = {'来源', 'sources', 'source', '说明', '注意', '备注', '数据来源',
-             'n/a', '—', '-', '/', '合计', 'total', '单位', '趋势'}
+    # 見出し・注記など、財務データ点ではない既知のラベル
+    _SKIP = {
+        '来源', '说明', '注意', '备注', '数据来源', '合计', '单位', '趋势',
+        '出典', '説明', '注意', '注記', 'データ出典', '合計', '単位', '傾向',
+        'sources', 'source', 'n/a', '—', '-', '/', 'total',
+    }
     if label.lower() in _SKIP:
         return False
     return True
 
 
-# 两列表格行：| 标签 | 数值 unit |（专为财务报告的 KV 表设计）
+# 2列表：| ラベル | 数値 単位 |
 _KV_TABLE_RE = re.compile(
-    r'^\|\s*(?P<label>[^|*\n]{2,40}?)\s*\|\s*[~约]?\$?(?P<num>[\d,，\.]+)\s*'
-    r'(?P<unit>亿[元美港]?元?|万亿|[xX倍]|%|[BMT亿])?\s*[\|（\(]'
+    rf'^\|\s*(?P<label>[^|*\n]{{2,40}}?)\s*\|\s*{_APPROX_PATTERN}\$?'
+    rf'(?P<num>[\d,，\.]+)\s*(?P<unit>{_UNIT_PATTERN})?\s*[\|（\(]'
 )
 
-# 带标签的 KV 行：标签：数值 单位
+# ラベル付きKV行：ラベル：数値 単位
+# 日本語の仮名で始まる項目名も対象にする。
 _KV_LABEL_RE = re.compile(
-    r'(?P<label>[\u4e00-\u9fa5A-Za-z][^\|\n：:*]{1,30})[：:]\s*[~约]?\$?'
-    r'(?P<num>[\d,，\.]+)\s*(?P<unit>亿[元美港]?元?|万亿|[xX倍]|%|[BMT])?'
+    rf'(?P<label>[\u3040-\u30ff\u3400-\u9fffA-Za-z][^\|\n：:*]{{1,30}})'
+    rf'[：:]\s*{_APPROX_PATTERN}\$?(?P<num>[\d,，\.]+)\s*'
+    rf'(?P<unit>{_UNIT_PATTERN})?'
 )
 
 
 def _parse_md_tables(lines: list) -> list:
-    """解析 Markdown 中所有表格，返回 (row_label, col_header, value, unit, lineno, raw) 列表。"""
+    """Markdown表を解析し、行ラベル・列見出し・値・単位などを返す。"""
     results = []
     i = 0
     while i < len(lines):
         line = lines[i].strip()
-        # 检测表头行（含 | 且不是分隔行）
+        # 表見出し行を検出する（区切り行は除く）。
         if '|' in line and not re.match(r'^\|[\-\s\|:]+\|$', line):
             headers_raw = [h.strip().strip('*_').strip() for h in line.split('|')]
             headers_raw = [h for h in headers_raw if h]
-            # 下一行应是分隔行
+            # 次の行が区切り行であることを確認する。
             if i + 1 < len(lines) and re.match(r'^\|[\-\s\|:]+\|$', lines[i+1].strip()):
-                i += 2  # 跳过分隔行
-                # 读数据行
+                i += 2  # 区切り行を読み飛ばす。
+                # データ行を読む。
                 while i < len(lines):
                     dline = lines[i].strip()
                     if not dline or not dline.startswith('|'):
@@ -136,10 +160,10 @@ def _parse_md_tables(lines: list) -> list:
                     row_label = cells[0]
                     for col_idx, cell in enumerate(cells[1:], start=1):
                         col_header = headers_raw[col_idx] if col_idx < len(headers_raw) else f'列{col_idx}'
-                        # 提取 cell 中的数字+单位
+                        # セル内の数値と単位を抽出する。
                         m = re.search(
-                            r'[~约]?\$?([\d,，\.]+)\s*(亿[元美港]?元?|万亿|[xX倍]|%|[BMT])?',
-                            cell
+                            rf'{_APPROX_PATTERN}\$?([\d,，\.]+)\s*({_UNIT_PATTERN})?',
+                            cell,
                         )
                         if m:
                             val = _clean_num(m.group(1))
@@ -153,15 +177,14 @@ def _parse_md_tables(lines: list) -> list:
 
 
 def extract_data_points(md_text: str) -> list:
-    """从 Markdown 报告中提取所有可识别的财务数据点。
+    """Markdownレポートから認識可能な財務データ点を抽出する。
 
-    覆盖三类结构：
-      1. 多列 Markdown 表格（最主要的来源）：(行标签 + 列标题) → 数值
-      2. 带冒号的 KV 行：标签：数值 单位
-      3. 加粗数字行：**数值** 单位
+    主に次の構造を対象とする。
+      1. 複数列のMarkdown表：(行ラベル + 列見出し) → 数値
+      2. コロン区切りのKV行：ラベル：数値 単位
 
-    返回 list of dict：
-      {id, label, reported_value, unit, raw_text, line_number}
+    戻り値はid、label、reported_value、unit、raw_text、line_numberを
+    持つ辞書のリストである。
     """
     points = []
     seen = set()
@@ -172,7 +195,7 @@ def extract_data_points(md_text: str) -> list:
             return
         if val is None or val == 0 or val > 1e15:
             return
-        # 过滤纯年份/季度
+        # 年または四半期だけの値を除外する。
         if re.fullmatch(r'(20\d{2}|Q[1-4]|\d{4}\s*Q[1-4])', label.strip()):
             return
         key = f"{label}|{round(val,4)}|{unit}"
@@ -191,22 +214,25 @@ def extract_data_points(md_text: str) -> list:
     lines = md_text.split('\n')
     in_code = False
 
-    # --- 1. 多列表格 ---
+    # --- 1. 複数列の表 ---
     for row_label, col_header, val, unit, lineno, raw in _parse_md_tables(lines):
-        # 跳过无意义行标签
+        # 意味のない行ラベルを除外する。
         if not _is_valid_label(row_label):
             continue
-        # 跳过无意义列标题（YoY增速列单独标注，不作为待核验数据）
-        if col_header.upper() in ('YOY', 'YOY增速', '增速', '同比', '变化', '趋势', '说明', '备注'):
+        # 増減率、説明、出典などの列は独立した検証対象にしない。
+        if col_header.upper() in (
+            'YOY', 'YOY增速', '增速', '同比', '变化', '趋势', '说明', '备注',
+            '前年比', '増減率', '変化', '傾向', '説明', '注記', '出典', 'データ出典',
+        ):
             continue
-        # label = "行标签 · 列标题"（若列标题是行标签的补充）
+        # 列見出しが補足情報なら、行ラベルと結合する。
         if col_header and col_header != row_label:
-            label = f"{row_label} · {col_header}"
+            label = f"{row_label}・{col_header}"
         else:
             label = row_label
         _add(label, val, unit, lineno, raw)
 
-    # --- 2. KV 冒号行 ---
+    # --- 2. コロン区切りのKV行 ---
     for lineno, line in enumerate(lines, start=1):
         stripped = line.strip()
         if stripped.startswith('```'):
@@ -215,7 +241,7 @@ def extract_data_points(md_text: str) -> list:
         if in_code or stripped.startswith('> ') or re.match(r'^#{1,6}\s', stripped):
             continue
         if '|' in stripped:
-            continue  # 表格已在上面处理
+            continue  # 表は上で処理済みである。
 
         for m in _KV_LABEL_RE.finditer(stripped):
             label = m.group('label')
@@ -227,46 +253,35 @@ def extract_data_points(md_text: str) -> list:
 
 
 def sample_points(points: list, ratio: float = 0.15, seed: int = None) -> list:
-    """随机抽取 ratio 比例的数据点，最少 3 个，最多 30 个。"""
+    """指定比率を無作為抽出する。最少3件、最多30件とする。"""
     n = max(3, min(30, math.ceil(len(points) * ratio)))
     n = min(n, len(points))
     rng = Random(seed)
     sampled = rng.sample(points, n)
-    # 按行号排序，方便人工比对
+    # 人手で照合しやすいよう行番号順に並べる。
     return sorted(sampled, key=lambda p: p['line_number'])
 
 
 # ---------------------------------------------------------------------------
-# 准出/打回判决
+# 公開可／差し戻し判定
 # ---------------------------------------------------------------------------
 
-_TOLERANCE = 0.01   # 1% 容差
+_TOLERANCE = 0.01   # 許容差1%
 
 
 def _pct_diff(reported: float, fetched: float) -> float:
-    """相对偏差 (absolute)。"""
+    """絶対値ベースの相対偏差を返す。"""
     if reported == 0:
         return 0.0 if fetched == 0 else float('inf')
     return abs(reported - fetched) / abs(reported)
 
 
 def render_verdict(results: list, report_name: str = "") -> dict:
-    """
-    根据核验结果输出准出/打回判决。
+    """照合結果を表示し、公開可または差し戻しの判定を返す。
 
-    results: list of dict，每项包含：
-      - id, label, reported_value, unit, fetched_value, fetched_source
-      - (可选) fetched_value2, fetched_source2   ← 第二来源
-
-    返回：
-      {
-        'verdict': 'PASS' | 'FAIL',
-        'pass_count': int,
-        'fail_count': int,
-        'total': int,
-        'fail_items': [...],
-        'summary': str,
-      }
+    各要素はid、label、reported_value、unit、fetched_value、
+    fetched_sourceを持つ。任意で第2情報源のfetched_value2と
+    fetched_source2を指定できる。戻り値のJSON互換キーは維持する。
     """
     BOLD = '\033[1m'
     RED = '\033[91m'
@@ -275,9 +290,9 @@ def render_verdict(results: list, report_name: str = "") -> dict:
     RESET = '\033[0m'
 
     print('=' * 70)
-    print(f'{BOLD}报告数据抽检 — 准出/打回判决{RESET}')
+    print(f'{BOLD}レポートデータ抽出監査：公開可／差し戻し判定{RESET}')
     if report_name:
-        print(f'报告：{report_name}')
+        print(f'レポート：{report_name}')
     print('=' * 70)
     print()
 
@@ -293,32 +308,32 @@ def render_verdict(results: list, report_name: str = "") -> dict:
         fetched2 = item.get('fetched_value2')
         source2 = item.get('fetched_source2', '')
 
-        # --- 主来源比对 ---
+        # --- 主情報源との照合 ---
         if fetched is None:
-            # 没有提供核验值 → 跳过（不计入通过/失败）
-            print(f'  ⬜ [{item["id"]:>2}] {label[:35]:35s} {reported:>12.2f} {unit}  →  [未提供核验值，跳过]')
+            # 確認値がない項目は合否集計から除外する。
+            print(f'  ⬜ [{item["id"]:>2}] {label[:35]:35s} {reported:>12.2f} {unit}  →  [確認値なし、除外]')
             continue
 
         fetched = float(fetched)
         diff1 = _pct_diff(reported, fetched)
 
-        # --- 第二来源比对（如有）---
+        # --- 第2情報源との照合（指定時）---
         diff2 = None
         if fetched2 is not None:
             fetched2 = float(fetched2)
             diff2 = _pct_diff(reported, fetched2)
 
-        # 判断
+        # 判定
         pass1 = diff1 <= _TOLERANCE
         pass2 = (diff2 is None) or (diff2 <= _TOLERANCE)
 
         if pass1 and pass2:
-            status = f'{GREEN}✅ 通过{RESET}'
+            status = f'{GREEN}✅ 合格{RESET}'
             detail = f'{source}: {fetched:.2f} (偏差 {diff1*100:.2f}%)'
             if diff2 is not None:
                 detail += f'  |  {source2}: {fetched2:.2f} (偏差 {diff2*100:.2f}%)'
         elif not pass1 and not pass2:
-            status = f'{RED}❌ 不通过{RESET}'
+            status = f'{RED}❌ 不合格{RESET}'
             detail = f'{source}: {fetched:.2f} (偏差 {diff1*100:.2f}%)'
             if diff2 is not None:
                 detail += f'  |  {source2}: {fetched2:.2f} (偏差 {diff2*100:.2f}%)'
@@ -337,8 +352,8 @@ def render_verdict(results: list, report_name: str = "") -> dict:
                 'line_number': item.get('line_number', 0),
             })
         else:
-            # 一个来源通过，一个不通过 → 警告，不计入失败
-            status = f'{YELLOW}⚠️  警告{RESET}'
+            # 一方だけが許容差内の場合は警告とし、不合格には数えない。
+            status = f'{YELLOW}⚠️  要確認{RESET}'
             detail = f'{source}: {fetched:.2f} (偏差 {diff1*100:.2f}%)'
             if diff2 is not None:
                 detail += f'  |  {source2}: {fetched2:.2f} (偏差 {diff2*100:.2f}%)'
@@ -349,7 +364,7 @@ def render_verdict(results: list, report_name: str = "") -> dict:
                 'diff2_pct': round(diff2 * 100, 2) if diff2 is not None else None,
             })
 
-        print(f'  {status} [{item["id"]:>2}] {label[:35]:35s}  报告: {reported:>12.2f} {unit}')
+        print(f'  {status} [{item["id"]:>2}] {label[:35]:35s}  レポート値: {reported:>12.2f} {unit}')
         print(f'              {" " * 38}{detail}')
 
     print()
@@ -360,19 +375,19 @@ def render_verdict(results: list, report_name: str = "") -> dict:
     warn_count = len(warn_items)
     pass_count = total - fail_count - warn_count
 
-    print(f'  抽检总数: {total}  |  通过: {GREEN}{pass_count}{RESET}  |  警告: {YELLOW}{warn_count}{RESET}  |  不通过: {RED}{fail_count}{RESET}')
+    print(f'  監査件数: {total}  |  合格: {GREEN}{pass_count}{RESET}  |  要確認: {YELLOW}{warn_count}{RESET}  |  不合格: {RED}{fail_count}{RESET}')
     print()
 
     if fail_count == 0:
-        print(f'{BOLD}{GREEN}【准出】所有抽检数据通过，报告可发布。{RESET}')
+        print(f'{BOLD}{GREEN}【公開可】監査対象データはすべて合格した。{RESET}')
         verdict = 'PASS'
     else:
-        print(f'{BOLD}{RED}【打回】{fail_count} 个数据点核验不通过，报告需修正后重审。{RESET}')
+        print(f'{BOLD}{RED}【差し戻し】{fail_count}件が不合格である。修正後に再監査が必要である。{RESET}')
         print()
-        print(f'{BOLD}打回原因：{RESET}')
+        print(f'{BOLD}差し戻し理由：{RESET}')
         for fi in fail_items:
-            print(f'  ❌ 第 {fi["line_number"]} 行 | {fi["label"]}')
-            print(f'     报告值：{fi["reported"]} {fi["unit"]}')
+            print(f'  ❌ {fi["line_number"]}行目 | {fi["label"]}')
+            print(f'     レポート値：{fi["reported"]} {fi["unit"]}')
             print(f'     {fi["source"]}：{fi["fetched"]}  （偏差 {fi["diff1_pct"]}%）')
             if fi.get('fetched2') is not None:
                 print(f'     {fi["source2"]}：{fi["fetched2"]}  （偏差 {fi["diff2_pct"]}%）')
@@ -381,9 +396,9 @@ def render_verdict(results: list, report_name: str = "") -> dict:
         verdict = 'FAIL'
 
     if warn_count > 0:
-        print(f'{YELLOW}注意：{warn_count} 个数据点两来源结果不一致（超过1%），可能是口径差异（GAAP/Non-GAAP或汇率），请人工复核。{RESET}')
+        print(f'{YELLOW}注意：{warn_count}件で2情報源の結果が一致しない。GAAP／Non-GAAP、換算為替、基準日の差を人手で確認すること。{RESET}')
         for wi in warn_items:
-            print(f'  ⚠️  {wi["label"]}  报告:{wi["reported"]} {wi["unit"]}  偏差: {wi["diff1_pct"]}% / {wi["diff2_pct"]}%')
+            print(f'  ⚠️  {wi["label"]}  レポート値:{wi["reported"]} {wi["unit"]}  偏差: {wi["diff1_pct"]}% / {wi["diff2_pct"]}%')
 
     print('=' * 70)
 
@@ -399,58 +414,59 @@ def render_verdict(results: list, report_name: str = "") -> dict:
 
 
 # ---------------------------------------------------------------------------
-# CLI Entry Point
+# CLIエントリーポイント
 # ---------------------------------------------------------------------------
 
 def main():
+    _configure_text_streams()
     parser = argparse.ArgumentParser(
-        description='Report Audit Tool — 研究报告数据抽检工具',
+        description='レポート監査ツール：調査レポートの財務データ抽出監査',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-工作流程：
+処理手順：
 
-  Step 1 — 提取数据点并随机抽样 15%，输出抽检清单：
-    python3 tools/report_audit.py extract --report reports/腾讯/腾讯-research-20260408.md
+  1. データ点を抽出し、15%を無作為抽出して監査リストを表示する。
+    python3 tools/report_audit.py extract --report reports/企業名/企業名-research-20260408.md
 
-  Step 2 — Claude 对清单中每个数据点，从可靠信源取数，
-            填入 fetched_value / fetched_source / fetched_value2 / fetched_source2
+  2. 各データ点を信頼できる情報源で確認し、
+     fetched_value / fetched_source / fetched_value2 / fetched_source2へ入力する。
 
-  Step 3 — 输入核验结果，输出准出/打回判决：
+  3. 確認結果を入力し、公開可／差し戻しを判定する。
     python3 tools/report_audit.py verdict --results '[
-      {"id":1,"label":"营业收入","reported_value":7518,"unit":"亿","fetched_value":7518,"fetched_source":"macrotrends","fetched_value2":7500,"fetched_source2":"stockanalysis"},
+      {"id":1,"label":"売上高","reported_value":7518,"unit":"億元","fetched_value":7518,"fetched_source":"macrotrends","fetched_value2":7500,"fetched_source2":"stockanalysis"},
       ...
     ]'
 
-  一步预览（只打印抽检清单，不核验）：
+  抽出結果だけを表示する場合：
     python3 tools/report_audit.py extract --report reports/xxx.md --dry-run
 
-  指定抽样比例（默认0.15）：
+  抽出比率を指定する場合（既定値0.15）：
     python3 tools/report_audit.py extract --report reports/xxx.md --ratio 0.20
 
-  固定随机种子（复现同一批样本）：
+  乱数シードを固定し、同じ標本を再現する場合：
     python3 tools/report_audit.py extract --report reports/xxx.md --seed 42
         """)
 
     sub = parser.add_subparsers(dest='command')
 
-    # extract
-    ext = sub.add_parser('extract', help='从报告提取数据点并随机抽样')
-    ext.add_argument('--report', required=True, help='报告文件路径（Markdown）')
-    ext.add_argument('--ratio', type=float, default=0.15, help='抽样比例，默认 0.15')
-    ext.add_argument('--seed', type=int, default=None, help='随机种子（可选，用于复现）')
-    ext.add_argument('--dry-run', action='store_true', help='只打印，不输出 JSON')
+    # データ抽出
+    ext = sub.add_parser('extract', help='レポートからデータ点を抽出し、無作為抽出する')
+    ext.add_argument('--report', required=True, help='Markdownレポートのファイルパス')
+    ext.add_argument('--ratio', type=float, default=0.15, help='抽出比率。既定値は0.15')
+    ext.add_argument('--seed', type=int, default=None, help='再現用の乱数シード（任意）')
+    ext.add_argument('--dry-run', action='store_true', help='監査リストだけを表示し、JSONを出力しない')
 
-    # verdict
-    vrd = sub.add_parser('verdict', help='根据核验结果输出准出/打回判决')
-    vrd.add_argument('--results', required=True, help='JSON 数组，含 fetched_value 等字段')
-    vrd.add_argument('--report', default='', help='报告名称（可选，用于显示）')
-    vrd.add_argument('--output-json', action='store_true', help='将判决结果以 JSON 输出到 stdout')
+    # 判定
+    vrd = sub.add_parser('verdict', help='確認結果から公開可／差し戻しを判定する')
+    vrd.add_argument('--results', required=True, help='fetched_valueなどを含むJSON配列')
+    vrd.add_argument('--report', default='', help='表示するレポート名（任意）')
+    vrd.add_argument('--output-json', action='store_true', help='判定結果をJSONで標準出力へ追加する')
 
     args = parser.parse_args()
 
     if args.command == 'extract':
         if not os.path.exists(args.report):
-            print(f'❌ 文件不存在: {args.report}', file=sys.stderr)
+            print(f'❌ ファイルが存在しない: {args.report}', file=sys.stderr)
             sys.exit(1)
 
         with open(args.report, 'r', encoding='utf-8') as f:
@@ -460,26 +476,26 @@ def main():
         sampled = sample_points(all_points, ratio=args.ratio, seed=args.seed)
 
         print('=' * 70)
-        print(f'报告数据抽检清单')
-        print(f'文件：{args.report}')
-        print(f'总提取数据点：{len(all_points)}  |  抽样比例：{args.ratio:.0%}  |  抽检数量：{len(sampled)}')
+        print('レポートデータ抽出監査リスト')
+        print(f'ファイル：{args.report}')
+        print(f'抽出データ点数：{len(all_points)}  |  抽出比率：{args.ratio:.0%}  |  監査件数：{len(sampled)}')
         if args.seed is not None:
-            print(f'随机种子：{args.seed}（可用于复现同一批样本）')
+            print(f'乱数シード：{args.seed}（同じ標本の再現に利用できる）')
         print('=' * 70)
         print()
-        print(f'{"ID":>3}  {"行号":>5}  {"数据标签":<35}  {"报告值":>12}  {"单位"}')
+        print(f'{"ID":>3}  {"行番号":>5}  {"データラベル":<35}  {"レポート値":>12}  {"単位"}')
         print(f'{"─"*3}  {"─"*5}  {"─"*35}  {"─"*12}  {"─"*6}')
         for p in sampled:
             print(f'{p["id"]:>3}  {p["line_number"]:>5}  {p["label"][:35]:<35}  {p["reported_value"]:>12.2f}  {p["unit"]}')
         print()
-        print('↑ 请对上述每个数据点，从以下信源取数，填入 fetched_value：')
-        print('  美股：macrotrends.net（主）+ stockanalysis.com（副）')
-        print('  港股：aastocks.com（主）+ macrotrends ADR（副）')
-        print('  A股： eastmoney.com（主）+ cninfo.com.cn（副）')
+        print('↑ 各データ点を次の情報源などで確認し、fetched_valueへ入力すること。')
+        print('  米国株：macrotrends.net（主）+ stockanalysis.com（副）')
+        print('  香港株：aastocks.com（主）+ macrotrends ADR（副）')
+        print('  中国本土A株：eastmoney.com（主）+ cninfo.com.cn（副）')
         print()
 
         if not args.dry_run:
-            # 输出可填写的 JSON 模板
+            # 入力用JSONテンプレートを表示する。
             template = []
             for p in sampled:
                 template.append({
@@ -489,12 +505,12 @@ def main():
                     'unit': p['unit'],
                     'line_number': p['line_number'],
                     'raw_text': p['raw_text'],
-                    'fetched_value': None,       # ← 填入主来源核验值
-                    'fetched_source': '',        # ← 填入主来源名称
-                    'fetched_value2': None,      # ← 填入副来源核验值（可选）
-                    'fetched_source2': '',       # ← 填入副来源名称（可选）
+                    'fetched_value': None,       # ← 主情報源の確認値
+                    'fetched_source': '',        # ← 主情報源名
+                    'fetched_value2': None,      # ← 第2情報源の確認値（任意）
+                    'fetched_source2': '',       # ← 第2情報源名（任意）
                 })
-            print('抽检清单 JSON（填入 fetched_value 后，传给 verdict 命令）：')
+            print('監査リストJSON（fetched_valueを入力してverdictへ渡す）：')
             print()
             print(json.dumps(template, ensure_ascii=False, indent=2))
 
@@ -502,7 +518,7 @@ def main():
         try:
             results = json.loads(args.results)
         except json.JSONDecodeError as e:
-            print(f'❌ JSON 解析失败: {e}', file=sys.stderr)
+            print(f'❌ JSONの解析に失敗した: {e}', file=sys.stderr)
             sys.exit(1)
 
         report_name = args.report or ''
@@ -511,7 +527,7 @@ def main():
         if args.output_json:
             print(json.dumps(outcome, ensure_ascii=False, indent=2))
 
-        # 非零退出码表示打回，方便 CI/脚本判断
+        # 差し戻しは非ゼロ終了コードとし、CIやスクリプトで判別可能にする。
         sys.exit(0 if outcome['verdict'] == 'PASS' else 1)
 
     else:

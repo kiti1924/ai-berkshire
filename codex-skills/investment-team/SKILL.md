@@ -1,227 +1,268 @@
 ---
 name: investment-team
-description: "AI Berkshire skill: 投研团队：四角色并行分析框架. Source: skills/investment-team.md."
+description: "AI Berkshire Skill: 投資調査チーム：4役割による並行分析（原本: skills/investment-team.md）"
 ---
 
-## Codex adapter note
+## Codexアダプター注記
 
-This skill is generated from `skills/investment-team.md` so Claude Code and Codex users share one canonical workflow.
+このSkillは`skills/investment-team.md`から生成され、Claude CodeとCodexで同じ正本のワークフローを共有する。
 
-- Treat `$ARGUMENTS` as the user's request in the current Codex thread.
-- When the source mentions Claude-only surfaces such as Task, Agent, WebSearch, Bash, Read, or Write, use the closest Codex capability available in this session: subagents when available, web search when needed, shell commands for local tools, and normal file edits for workspace files.
-- Use shared project tools from `tools/` in this repository. Commands that reference `~/ai-berkshire/tools/...` assume the repo is checked out at `~/ai-berkshire`; if needed, prefer the current workspace path.
-- Preserve the research quality rules from `AGENTS.md`: cross-check financial data, use exact arithmetic tools for valuation/math, and clearly label uncertainty and source gaps.
+- `$ARGUMENTS`は、現在のCodexスレッドで受け取ったユーザーの依頼として扱う。
+- 正本がTask、Agent、WebSearch、Bash、Read、WriteなどClaude Code固有の機能を参照する場合は、このセッションで利用できる最も近いCodex機能へ置き換える。必要に応じてサブエージェント、Web検索、ローカルツール実行用のシェルコマンド、ワークスペース内の通常のファイル編集を使う。
+- 共通ツールは本リポジトリの`tools/`から使用する。`~/ai-berkshire/tools/...`を参照するコマンドは、リポジトリを`~/ai-berkshire`へチェックアウトした前提である。必要なら現在のワークスペースのパスを優先する。
+- `AGENTS.md`の調査品質規則を維持する。財務データを照合し、評価と計算には精密計算ツールを使い、不確実性と情報源の不足を明示する。
 
-# 投研团队：四角色并行分析框架
+# 投資調査チーム：4役割による並行分析
 
-对 $ARGUMENTS 进行团队化投资研究分析。使用 Team 工具创建真正的多Agent并行研究团队。
+$ARGUMENTS に対して、Teamツールを使った複数Agentの並行投資調査を行う。
 
-## 执行流程
+## 実行手順
 
-### 第一步：展示团队框架
+### 手順1：チーム構成を示す
 
-向用户展示以下团队结构，确认后启动：
+調査開始時に次の構成をユーザーへ示し、各役割を明確にする。
 
-| 角色 | 职责 | 分析框架 |
-|------|------|----------|
-| **team-lead**（你自己） | 统筹协调、汇总研判、输出最终报告 | 四大师综合框架 |
-| **business-analyst** | 商业模式 & 护城河分析 | 段永平视角 |
-| **financial-analyst** | 财务报表 & 估值分析 | 巴菲特视角 |
-| **industry-researcher** | 行业格局 & 竞争态势 | 芒格视角 |
-| **risk-assessor** | 风险评估 & 管理层研判 | 李录视角 |
+| 役割 | 責任 | 主な分析枠組み |
+|---|---|---|
+| **team-lead**（自分） | 調整、論点統合、最終判断、報告作成 | 4つの観点を統合する |
+| **business-analyst** | 事業モデルと経済的な堀 | 段永平の事業観 |
+| **financial-analyst** | 財務諸表とバリュエーション | バフェットの価値評価 |
+| **industry-researcher** | 業界構造と競争環境 | マンガーの多面的・逆向き思考 |
+| **risk-assessor** | リスク、経営陣、長期予測可能性 | 李録の長期・文明進化の観点 |
 
-### 第一步半：AI研究偏见评估
+明確な追加条件がなければ、構成確認だけを理由に作業を止めず、調査を開始してよい。
 
-在创建团队前，先向用户展示该公司的"AI可研究性"评估：
+### 手順1.5：AI調査の偏りを評価する
 
-**信息丰富度评级**（决定研究策略）：
-| 等级 | 特征 | 研究策略调整 |
-|------|------|------------|
-| A级（信息充裕） | 上市多年、券商覆盖广 | 团队重点放在**反面检验**和**非共识视角**，避免输出与市场一致的"正确的废话" |
-| B级（信息适中） | 上市不久、覆盖有限 | 每个Agent的推算数据必须标注置信度，team-lead汇总时标注"数据充分度" |
-| C级（信息稀缺） | 冷门/新上市/新兴市场 | 团队转为"第一性原理模式"：不追求报告完整性，聚焦商业本质的几个核心问题 |
+チーム作成前に、対象企業のAIによる調査可能性をA/B/Cで評価し、各Agentの調査方法へ反映する。
 
-**关键提醒**：资料多≠确定性高，资料少≠确定性低。AI能输出的置信度 ≠ 投资的真实确定性。确定性来自商业模式本身，不来自资料数量。
+| 区分 | 特徴 | 調査戦略 |
+|---|---|---|
+| A（情報が豊富） | 上場歴が長く、coverageが広い | 反対仮説と非共通見解を重点調査し、市場の説明を反復するだけの分析を避ける |
+| B（情報が中程度） | 上場歴が短い、coverageが限られる | 推定データごとに確度を付け、team-leadがデータ充足度を統合評価する |
+| C（情報が少ない） | 注目度が低い、新規上場、新興市場など | 第一原理モードへ切り替え、報告の見た目より事業の本質を決める問いを優先する |
 
-将评级结果告知每个Agent，影响其研究方式。
+**重要**：資料が多いことは投資の確実性を意味せず、資料が少ないことも事業の質が低いことを意味しない。AIが説明できる確度と、事業の予測可能性を分ける。
 
-### 第二步：创建团队
+評価結果を全Agentのpromptへ含める。
 
-使用 TeamCreate 创建团队：
-- team_name: `{公司名}-research`（英文小写，如 `meituan-research`）
-- agent_type: `team-lead`
+### 手順2：チームを作成する
 
-### 第三步：创建4个任务
+TeamCreateを使う。
 
-使用 TaskCreate 创建以下4个任务（每个都要有 subject、description、activeForm）：
+- `team_name`: `{会社名}-research`。英小文字とhyphenを使う。例：`meituan-research`
+- `agent_type`: `team-lead`
 
-#### 任务1：商业模式分析
-- subject: `分析{公司名}商业模式、护城河与用户价值`
-- description 包含：
-  1. 商业模式本质：核心生意定义、收入结构拆解
-  2. 平台/产品飞轮效应如何运转
-  3. 护城河分析：品牌/转换成本/网络效应/规模效应/技术壁垒，逐一验证
-  4. 用户/客户价值：为各方创造了什么独特价值
-  5. 业务矩阵与协同效应
-  6. 段永平"好生意"标准评估：差异化、定价权、可持续竞争优势
-  7. 要求搜索最新财报、行业报告等公开信息
+### 手順3：4つのTaskを作成する
 
-#### 任务2：财务与估值分析
-- subject: `分析{公司名}财务数据、盈利能力与估值`
-- description 包含：
-  1. 近3-5年营收、净利润、经营利润趋势
-  2. 盈利能力指标：ROE、ROA、毛利率、经营利润率
-  3. 现金流分析：经营性现金流、自由现金流、资本开支
-  4. 资产负债表健康度：现金储备、负债率、流动性
-  5. 估值分析：PE/PS/PB/EV等，与历史及同业对比
-  6. 安全边际评估：内在价值 vs 当前股价
-  7. **金融严谨性验证（必须使用Bash调用工具，禁止心算）**：
-     - 市值验算：`python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap --price {价格} --shares {股本} --reported {报告市值} --currency {币种}`
-     - 估值验算：`python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation --price {价格} --eps {EPS} --bvps {每股净资产}`
-     - 关键数据交叉验证：`python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate --field {字段} --values '{JSON}' --unit {单位}`
-     - 三情景估值：`python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario --price {价格} --eps {EPS} --shares {股本亿} --growth {乐观} {中性} {悲观} --pe {乐观PE} {中性PE} {悲观PE}`
-     - 将工具输出结果直接嵌入报告中作为验证记录
+TaskCreateで次の4Taskを作る。各Taskに`subject`、`description`、`activeForm`を設定する。
 
-#### 任务3：行业与竞争分析
-- subject: `分析{行业}行业格局与{公司名}竞争态势`
-- description 包含：
-  1. 行业规模与增长：市场规模、增速、渗透率
-  2. 竞争格局：主要对手市场份额、竞争策略对比
-  3. 核心竞争者威胁评估：逐个分析主要竞争对手
-  4. 各细分赛道格局
-  5. 行业趋势：技术变革、政策影响、新进入者
-  6. 产业链分析：上中下游价值分配
-  7. 要求搜索最新行业数据和竞争动态
+#### Task 1：事業モデル
 
-#### 任务4：风险与管理层评估
-- subject: `评估{公司名}投资风险与管理层质量`
-- description 包含：
-  1. 管理层评估：CEO能力圈、诚信度、战略眼光、资本配置能力、历史决策质量
-  2. 监管风险：当前及潜在监管影响
-  3. 竞争风险：各竞争对手威胁程度评估
-  4. 业务风险：新业务亏损、扩张不确定性
-  5. 宏观风险：经济周期、行业周期影响
-  6. 治理结构：股权结构、关联交易、股东回报政策
-  7. 长期确定性：10年后公司会怎样？什么可能颠覆其商业模式？
-  8. 要求搜索最新监管动态、管理层言论等
+- `subject`: `{会社名}の事業モデル、経済的な堀、顧客価値を分析する`
+- `description`に含める内容：
+  1. 事業の本質と売上構成。
+  2. platformまたは製品のflywheel。
+  3. ブランド、切替コスト、ネットワーク効果、規模の経済、技術障壁を個別に検証する。
+  4. 顧客、supplier、partnerなど各主体へ提供する固有価値。
+  5. 事業portfolioとsynergy。
+  6. 段永平の「優れた事業」の観点から、差別化、価格決定力、持続的競争優位性を評価する。
+  7. 最新の決算資料、法定開示、業界資料を検索する。
 
-### 第四步：启动4个并行Agent
+#### Task 2：財務とバリュエーション
 
-使用 Task 工具同时启动4个Agent（**必须在同一条消息中并行调用**）：
-
-每个Agent的配置：
-- `subagent_type`: `general-purpose`
-- `run_in_background`: `true`
-- `team_name`: 对应团队名
-- `name`: 对应角色名（business-analyst / financial-analyst / industry-researcher / risk-assessor）
-
-每个Agent的prompt模板：
-
-```
-你是{公司名}投研团队中的"{角色中文名}"，负责从{大师名}投资视角分析{公司名}。
-
-请完成任务 #{任务编号}：{任务subject}
-
-具体要求：
-{任务description的内容}
-
-**研究方法**：
-- 使用 WebSearch 搜索最新公开信息（财报、行业报告、新闻）
-- **财务数据必须来自两个独立来源**，按 `skills/financial-data.md` 规范执行（美股：macrotrends+stockanalysis；港股：aastocks+macrotrends；A股：东方财富+巨潮资讯），两源误差>1%须标记
-- 确保数据准确，关键数据标注来源
-- 分析要深入，不流于表面
-
-**输出要求**：
-- 报告要详尽，使用Markdown表格呈现关键数据
-- 每个分析维度要有明确结论和评分
-- 报告末尾要有该维度的总体结论
-
-**完成后**：
-1. 使用 TaskUpdate 将任务 #{任务编号} 标记为 completed
-2. 通过 SendMessage 把完整分析报告发送给 team-lead（type: "message", recipient: "team-lead"）
-```
-
-### 第五步：接收报告并跟踪进度
-
-- 向用户实时展示进度表（哪些Agent已完成、哪些仍在研究中）
-- 每收到一份报告，更新进度并展示该报告的核心要点（3-5条）
-- 等待全部4份报告到齐
-
-### 第六步：关闭团队成员
-
-全部报告收到后，向4个Agent发送 shutdown_request（使用 SendMessage，type: "shutdown_request"）。
-
-### 第七步：汇总最终报告
-
-综合4份分析报告，输出以下结构的最终报告：
-
----
-
-#### 1. 一句话结论
-> 用一段话（50-100字）概括是否值得投资及核心逻辑
-
-#### 2. 四维评分总表
-| 维度 | 框架 | 评分(1-5星) | 核心判断 |
-|------|------|------------|----------|
-
-综合评分：X / 5
-
-#### 3. 核心数据速览
-关键财务和经营指标表格（近2年对比）
-
-#### 4. 各维度分析摘要
-每个维度摘取3-5条最重要的发现
-
-#### 5. 投资论点（Bull vs Bear）
-- 🟢 看多逻辑（5-7条）
-- 🔴 看空逻辑（5-7条）
-
-#### 6. 巴菲特买入前Checklist
-| # | 检查项 | 通过? | 说明 |
-10个核心检查项，逐一评估
-
-#### 7. 最终投资建议
-- 定性判断表（生意质量/管理层/估值/时机）
-- 分层操作建议表（激进型/稳健型/保守型 → 建议+价格区间）
-- 关键催化剂（加仓信号/减仓信号各3-5条）
-
-#### 8. 总结段落
-100-200字的最终总结
-
----
-
-### 第八步：保存报告
-
-将完整最终报告写入 `~/{公司名}投资研究报告_{日期}.md`（日期格式 YYYYMMDD）。
-
-### 第九步：数据抽检（准出流程）
+- `subject`: `{会社名}の財務、収益力、バリュエーションを分析する`
+- `description`に含める内容：
+  1. 直近3～5年の売上高、純利益、営業利益。
+  2. ROE、ROA、売上総利益率、営業利益率。
+  3. 営業キャッシュフロー、FCF、設備投資。
+  4. 現金、負債、流動性、net cash / net debt。
+  5. PER、PSR、PBR、EV関連指標を、過去と競合で比較する。
+  6. 内在価値と現在価格から安全余裕を評価する。
+  7. 次のコマンドで重要計算を検証し、暗算だけで確定しない。
 
 ```bash
-# Step 1 — 提取抽检清单（15%随机抽样）
-python3 ~/ai-berkshire/tools/report_audit.py extract \
-  --report <报告文件路径>
+python3 ~/ai-berkshire/tools/financial_rigor.py verify-market-cap \
+  --price {価格} --shares {発行済株式数} --reported {報告時価総額} --currency {通貨}
 
-# Step 2 — 对清单每项从可靠信源取数（参见 skills/financial-data.md）
+python3 ~/ai-berkshire/tools/financial_rigor.py verify-valuation \
+  --price {価格} --eps {EPS} --bvps {1株当たり純資産}
 
-# Step 3 — 输出准出/打回判决
-python3 ~/ai-berkshire/tools/report_audit.py verdict \
-  --results '<填好的JSON>' \
-  --report <报告文件名>
+python3 ~/ai-berkshire/tools/financial_rigor.py cross-validate \
+  --field {項目} --values '{JSON}' --unit {単位}
+
+python3 ~/ai-berkshire/tools/financial_rigor.py three-scenario \
+  --price {価格} --eps {EPS} --shares {発行済株式数} \
+  --growth {楽観} {基準} {悲観} --pe {楽観PER} {基準PER} {悲観PER}
 ```
 
-**【准出】** 全部通过 → 报告可发布；**【打回】** 有不通过 → 修正后重审。
+ツール出力は検証記録として報告に含める。
 
-### 第十步：清理团队
+#### Task 3：業界と競争
 
-使用 TeamDelete 清理团队资源。
+- `subject`: `{業界}の構造と{会社名}の競争上の位置を分析する`
+- `description`に含める内容：
+  1. 市場規模、成長率、penetration。
+  2. 主要競合のシェアと戦略。
+  3. 主要競合ごとの脅威。
+  4. 各subsectorの競争構造。
+  5. 技術変化、政策、新規参入。
+  6. value chainと利益配分。
+  7. 最新の公的統計、業界資料、競合開示を調査する。
 
-## 重要注意事项
+#### Task 4：リスクと経営陣
 
-1. **4个Agent必须并行启动**——在同一条消息中调用4次Task工具
-2. **Agent通过SendMessage汇报**——不是文件协作，是消息通信
-3. **数据准确性**——要求Agent使用WebSearch搜索最新数据，关键数据交叉验证
-4. **结论要明确**——不回避给出买入/观望/回避建议和具体价格区间
-5. **所有分析必须有数据支撑**——附数据来源
-6. **耐心等待**——4个Agent研究需要几分钟，实时向用户更新进度
-7. **反偏见意识**——team-lead在汇总时必须评估：各Agent的分析是否受限于资料充裕度？是否与市场共识过度趋同？最终报告需包含"信息丰富度评级"和"AI研究局限性声明"
-8. **信息稀缺时的诚实原则**——宁可在报告中留白标注"数据不足"，也不要用推测填满框架伪装确定性
+- `subject`: `{会社名}の投資リスクと経営陣の質を評価する`
+- `description`に含める内容：
+  1. CEO・経営陣の能力の輪、誠実性、戦略、資本配分、過去の判断。
+  2. 現在および潜在的な規制リスク。
+  3. 競合別の脅威。
+  4. 新規事業の損失、海外展開、executionなどの事業リスク。
+  5. 景気循環と業界cycle。
+  6. 株主構成、関連当事者取引、株主還元。
+  7. 10年後の企業像と、事業モデルを破壊し得る要因。
+  8. 最新の規制情報、開示、経営陣発言を調査する。
+
+### 手順4：4つのAgentを同時に起動する
+
+Taskツールを**同一メッセージ内で4回並行呼び出し**する。
+
+各Agentの設定：
+
+- `subagent_type`: `general-purpose`
+- `run_in_background`: `true`
+- `team_name`: 作成したチーム名
+- `name`: `business-analyst` / `financial-analyst` / `industry-researcher` / `risk-assessor`
+
+各Agentには次のpromptを使う。
+
+```text
+あなたは{会社名}の投資調査チームに所属する{役割名}である。{参照する投資家・思考枠組み}の観点を参考にしつつ、独立して分析する。
+
+Task #{Task番号}：{Task subject}
+
+具体的な要件：
+{Task description}
+
+情報量区分：{A/B/C}
+情報量に応じた調査方針：{対応戦略}
+
+調査方法：
+- WebSearchで最新の法定開示、決算資料、公的統計、業界資料、報道を調査する。
+- 重要な財務データは`skills/financial-data.md`に従い、原則として2つの独立した情報源で確認する。
+- 中国企業を調べる際は、必要に応じて中国語の正式名称や検索語を使ってよい。ただし最終報告は自然な日本語とする。
+- 各数値へ通貨、単位、対象期間、基準日、会計基準を付ける。
+- 会社側の説明、市場予想、計算上の推定、分析者の評価を区別する。
+- 重要な反対証拠を省略しない。
+
+出力要件：
+- Markdown表で主要データを示す。
+- 各分析項目に明確な結論と、可能なら★1～5の評価を付ける。
+- 末尾に当該観点からの総合結論、最大の不確実性、追加確認事項を記載する。
+- 本人の実在発言であるかのような架空の引用を作らない。
+
+完了後：
+1. TaskUpdateでTask #{Task番号}をcompletedにする。
+2. SendMessageを使い、type: "message"、recipient: "team-lead"として完全な分析報告を送る。
+```
+
+### 手順5：報告を受け取り、進捗を共有する
+
+- どのAgentが完了し、どのAgentが実行中かを簡潔な表でユーザーへ示す。
+- 報告を受け取るごとに、重要な発見を3～5点共有する。
+- 4件すべてが揃うまで、同じTaskを重複して起動しない。
+- Agent間の矛盾を、平均化せず論点として残す。
+
+### 手順6：Agentを停止する
+
+4件の報告を受領した後、SendMessageで各Agentへ`shutdown_request`を送る。
+
+### 手順7：最終報告を統合する
+
+#### 1. 結論
+
+50～100字を目安に、投資候補としての判断、主な根拠、最大の条件を先に示す。
+
+#### 2. 4観点の評価表
+
+| 観点 | 枠組み | 評価（★1～5） | 中核判断 |
+|---|---|---|---|
+
+総合評価：X / 5。単純平均を使う場合は、その限界を示す。
+
+#### 3. 主要データ
+
+直近2期間の財務・事業指標を比較し、通貨、単位、会計期間を明記する。
+
+#### 4. 各観点の重要な発見
+
+各Agentから3～5点を抽出し、重複を統合する。
+
+#### 5. 強気論と弱気論
+
+- 🟢 強気論：5～7点。
+- 🔴 弱気論：5～7点。
+- 双方の根拠の質と、反証条件を示す。
+
+#### 6. 購入前チェックリスト
+
+| # | 確認項目 | 通過・不通過・不明 | 根拠 |
+|---|---|---|---|
+
+10項目を評価し、データ不足を通過扱いにしない。
+
+#### 7. 最終判断
+
+- 事業の質、経営陣、バリュエーション、timingを表で整理する。
+- aggressive / standard / conservativeなど複数のリスク許容度について、調査上の選択肢と価格条件を示す。
+- 追加調査、仮説強化、仮説毀損のtriggerを各3～5点示す。
+- 個別事情を把握せず、確定的な注文指示を作らない。
+
+#### 8. 総括
+
+100～200字で、最も重要な賛成理由、反対理由、未解決事項をまとめる。
+
+#### 9. 出典と検証記録
+
+一次資料、補助資料、計算コマンド、データ差異を記録する。
+
+### 手順8：報告を保存する
+
+`reports/{会社名}/{会社名}-research-{YYYYMMDD}.md`へ保存する。
+
+### 手順9：データ監査を行う
+
+```bash
+# 手順1：15%の無作為抽出候補を作る
+python3 ~/ai-berkshire/tools/report_audit.py extract \
+  --report <報告ファイルパス>
+
+# 手順2：skills/financial-data.mdに従い、抽出項目を再取得する
+
+# 手順3：合格または差戻しを判定する
+python3 ~/ai-berkshire/tools/report_audit.py verdict \
+  --results '<入力済みJSON>' \
+  --report <報告ファイル名>
+```
+
+- **合格**：すべての抽出点が許容差内である。
+- **差戻し**：不一致がある。通貨、単位、期間、株式数、会計定義を確認し、修正後に再監査する。
+
+監査合格だけで報告全体の正確性が保証されたとは扱わず、定性的主張と未抽出数値も確認する。
+
+### 手順10：チームを削除する
+
+TeamDeleteでチーム資源を整理する。
+
+## 重要事項
+
+1. **4Agentは同時に起動する**：4回のTask呼び出しを同一メッセージに含める。
+2. **報告はSendMessageで受け取る**：同じファイルを同時編集させない。
+3. **最新性と正確性**：AgentはWebSearchを使い、重要データをクロスチェックする。
+4. **結論を曖昧にしない**：候補、見送り、判断保留などを、条件と価格範囲とともに示す。
+5. **根拠を付ける**：重要な判断には出典または計算を付ける。
+6. **進捗を共有する**：長時間の無言を避け、完了した部分を簡潔に報告する。
+7. **反偏見**：team-leadは、各Agentの分析が情報量と市場共通見解に引きずられていないか確認する。最終報告に情報量区分とAI調査の限界を含める。
+8. **情報不足を隠さない**：推測で空欄を埋めず、「確認できない」と明記する。
+9. **最終出力は日本語**：中国語検索語や原資料を利用しても、説明は共通locale設定に従う。
+10. **本資料は調査・学習用であり、投資助言ではない。**

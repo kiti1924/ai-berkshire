@@ -246,16 +246,16 @@ Output Layer
 Claude Code利用者は、リポジトリをcloneしてインストールスクリプトを1回実行した後、従来と同じスラッシュコマンドを使用できる。
 
 ```bash
-git clone git@github.com:kiti1924/ai-berkshire-JP.git
-cd ai-berkshire-JP
+git clone git@github.com:kiti1924/ai-berkshire.git
+cd ai-berkshire
 ./scripts/install-claude-commands.sh
 ```
 
 Codex利用者は、従来と同じSkill生成・インストール手順を使用できる。
 
 ```bash
-git clone git@github.com:kiti1924/ai-berkshire-JP.git
-cd ai-berkshire-JP
+git clone git@github.com:kiti1924/ai-berkshire.git
+cd ai-berkshire
 ./scripts/install-codex-skills.sh
 
 # 任意
@@ -475,7 +475,6 @@ git pull
 - ユーザーの既存commands・skillsの全削除
 - 管理対象外ファイルの上書き
 - clone先の絶対パスの埋め込み
-
 
 ## 7. データ源方針
 

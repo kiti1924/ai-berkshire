@@ -159,7 +159,6 @@ def install_codex_skills() -> None:
         
     dest_dir_str = os.environ.get("CODEX_HOME", os.path.expanduser("~/.codex"))
     skills_dest_codex = Path(dest_dir_str).resolve() / "skills"
-    skills_dest_codex.mkdir(parents=True, exist_ok=True)
     
     skills_dest_agents = Path(os.path.expanduser("~/.agents/skills")).resolve()
     skills_dest_agents.mkdir(parents=True, exist_ok=True)
@@ -169,16 +168,17 @@ def install_codex_skills() -> None:
     if codex_skills_src.exists():
         for skill_dir in codex_skills_src.iterdir():
             if skill_dir.is_dir():
-                target_codex = skills_dest_codex / skill_dir.name
-                atomic_copytree(skill_dir, target_codex)
-                installed.append(str(target_codex))
-                
+                # Clean up legacy duplicate in ~/.codex/skills if present
+                legacy_target = skills_dest_codex / skill_dir.name
+                if legacy_target.exists():
+                    shutil.rmtree(legacy_target, ignore_errors=True)
+                    
                 target_agents = skills_dest_agents / skill_dir.name
                 atomic_copytree(skill_dir, target_agents)
                 installed.append(str(target_agents))
                 
     update_manifest(home, "codex_skills", bundle_files + installed)
-    print(f"Installed Codex skills to {skills_dest_codex} and {skills_dest_agents}")
+    print(f"Installed Codex skills to {skills_dest_agents} (cleaned legacy copies in {skills_dest_codex})")
     print(f"Runtime bundle updated in {home}")
 
 def install_codex_prompts() -> None:

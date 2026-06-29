@@ -1,5 +1,5 @@
 ---
-description: "AI Berkshireのスラッシュエントリ：謚戊ｳ�隱ｿ譟ｻ繝√�ｼ繝�ｼ�4蠖ｹ蜑ｲ縺ｫ繧医ｋ荳ｦ陦悟��譫�。"
+description: "AI Berkshireのスラッシュエントリ：投資調査チーム：4役割（日本株JPモード時は6役割）による並行分析。"
 argument-hint: $ARGUMENTS
 ---
 

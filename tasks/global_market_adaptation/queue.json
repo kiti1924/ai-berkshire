@@ -24,7 +24,7 @@
       "name": "gma-01-installation",
       "title": "Installation and packaging compatibility",
       "dependencies": [0],
-      "status": "pending",
+      "status": "completed",
       "acceptance_criteria": [
         "元のリポジトリと同じ導入操作を維持",
         "AI_BERKSHIRE_HOME導入とOS別既定パス実装",

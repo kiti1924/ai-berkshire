@@ -3,7 +3,7 @@
   "spec_version": "0.3-draft",
   "requirements_mapping": [
     {"req_id": 1, "description": "4市場の証券を自動判定できる", "goal_id": 3, "status": "completed"},
-    {"req_id": 2, "description": "利用者は従来どおりSkillへ企業名またはTickerを渡すだけでよい", "goal_id": 11, "status": "pending"},
+    {"req_id": 2, "description": "利用者は従来どおりSkillへ企業名またはTickerを渡すだけでよい", "goal_id": 11, "status": "completed"},
     {"req_id": 3, "description": "Claude Codeで元リポジトリと同じ1回のインストール操作により利用できる", "goal_id": 1, "status": "completed"},
     {"req_id": 4, "description": "Codexで元リポジトリと同じSkill生成・インストール操作により利用できる", "goal_id": 1, "status": "completed"},
     {"req_id": 5, "description": "Codex slash promptsを導入しなくてもCodex Skill本体を利用できる", "goal_id": 1, "status": "completed"},
@@ -14,7 +14,7 @@
     {"req_id": 10, "description": "ShellおよびPowerShellから導入できる", "goal_id": 1, "status": "completed"},
     {"req_id": 11, "description": "インストーラーを複数回実行しても重複や破損が生じない", "goal_id": 1, "status": "completed"},
     {"req_id": 12, "description": "インストーラーが他プロジェクトのcommands・skillsを削除しない", "goal_id": 1, "status": "completed"},
-    {"req_id": 13, "description": "canonical skills/*.mdとCodex生成物の同期を自動検査できる", "goal_id": 11, "status": "pending"},
+    {"req_id": 13, "description": "canonical skills/*.mdとCodex生成物の同期を自動検査できる", "goal_id": 11, "status": "completed"},
     {"req_id": 14, "description": "インストール時にDocker、Webサーバー、常駐プロセスを要求しない", "goal_id": 1, "status": "completed"},
     {"req_id": 15, "description": "インストール時にAPIキーを要求または保存しない", "goal_id": 1, "status": "completed"},
     {"req_id": 16, "description": "EDINET_API_KEY未設定でも日本株分析を劣化動作で継続できる", "goal_id": 7, "status": "completed"},

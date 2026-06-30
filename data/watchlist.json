@@ -5,7 +5,8 @@
     "MU",
     "AVGO",
     "MRVL",
-    "TSM"
+    "TSM",
+    "SNDK"
   ],
   "us_ai_app": [
     "GOOG",
@@ -39,6 +40,7 @@
     "300748.SZ"
   ],
   "jp_stocks": [
-    "6268.T"
+    "6268.T",
+    "8035.T"
   ]
 }

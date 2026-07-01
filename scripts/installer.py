@@ -182,33 +182,9 @@ def install_codex_skills() -> None:
     print(f"Installed Codex skills to {skills_dest_agents} (cleaned legacy copies in {skills_dest_codex})")
     print(f"Runtime bundle updated in {home}")
 
-def install_codex_prompts() -> None:
-    home = get_ai_berkshire_home()
-    
-    sync_script = ROOT / "scripts" / "sync-codex-prompts.py"
-    if sync_script.exists():
-        import subprocess
-        subprocess.run([sys.executable, str(sync_script)], check=True)
-        
-    dest_dir_str = os.environ.get("CODEX_HOME", os.path.expanduser("~/.codex"))
-    prompts_dest = Path(dest_dir_str).resolve() / "prompts"
-    prompts_dest.mkdir(parents=True, exist_ok=True)
-    
-    prompts_src = ROOT / "codex-prompts"
-    installed: list[str] = []
-    if prompts_src.exists():
-        for item in prompts_src.glob("*.md"):
-            if item.is_file():
-                target = prompts_dest / item.name
-                copy_file_atomic(item, target)
-                installed.append(str(target))
-                
-    update_manifest(home, "codex_prompts", installed)
-    print(f"Installed Codex slash prompts to {prompts_dest}")
-
 def main() -> None:
     if len(sys.argv) < 2:
-        print("Usage: python3 installer.py [claude|codex-skills|codex-prompts]")
+        print("Usage: python3 installer.py [claude|codex-skills]")
         sys.exit(1)
         
     cmd = sys.argv[1]
@@ -216,8 +192,6 @@ def main() -> None:
         install_claude()
     elif cmd == "codex-skills":
         install_codex_skills()
-    elif cmd == "codex-prompts":
-        install_codex_prompts()
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)

@@ -9,15 +9,11 @@ validation tools. Keep compatibility with both Claude Code and Codex users.
 - `codex-skills/*/SKILL.md`: Codex skill packages. Most are generated from
   `skills/*.md`; Codex-only hand-written packages are allowed when clearly
   marked and no same-named `skills/*.md` source exists.
-- `codex-prompts/*.md`: generated Codex custom prompts for slash-command
-  style entry points. These are a compatibility layer; skills remain preferred.
 - `tools/*.py`: shared financial validation and data tools used by both systems.
 - `reports/`: research outputs. Do not rewrite unrelated reports while changing
   tooling or skills.
 - `scripts/sync-codex-skills.py`: regenerates Codex skills from `skills/*.md`.
 - `scripts/install-codex-skills.sh`: installs Codex skills locally.
-- `scripts/install-codex-prompts.sh`: installs generated Codex slash prompts
-  locally.
 - `scripts/install-claude-commands.sh`: installs Claude Code commands locally.
 
 ## Compatibility Rules
@@ -25,8 +21,6 @@ validation tools. Keep compatibility with both Claude Code and Codex users.
 - Treat `skills/*.md` as the canonical workflow source.
 - After changing any file in `skills/`, run:
   `python3 scripts/sync-codex-skills.py`
-- If slash prompt compatibility is needed, also run:
-  `python3 scripts/sync-codex-prompts.py`
 - Do not manually edit generated `codex-skills/*/SKILL.md` unless also updating
   the corresponding source in `skills/`.
 - For Codex-only hand-written packages under `codex-skills/`, keep them clearly
@@ -59,5 +53,3 @@ validation tools. Keep compatibility with both Claude Code and Codex users.
   `python3 scripts/sync-codex-skills.py`
 - To verify generated Codex artifacts are current without rewriting files, run:
   `python3 scripts/sync-codex-skills.py --check`
-  and, when slash prompts are relevant:
-  `python3 scripts/sync-codex-prompts.py --check`

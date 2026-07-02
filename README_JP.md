@@ -251,16 +251,12 @@ cd ai-berkshire
 
 # Codex skills を ~/.codex/skills に生成・インストール
 ./scripts/install-codex-skills.sh
-
-# 任意：Claude Code 風の /investment-research 入口が必要な場合
-./scripts/install-codex-prompts.sh
 ```
 
-このリポジトリには3つの入口がある。
+このリポジトリには2つの入口がある。
 
 - `skills/*.md`：Claude Code コマンドの正本
 - `codex-skills/*/SKILL.md`：`skills/*.md` から生成される Codex Skill パッケージ
-- `codex-prompts/*.md`：任意の Codex slash prompt 互換レイヤー
 
 ### 3. 使う
 

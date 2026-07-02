@@ -282,13 +282,9 @@ git clone https://github.com/xbtlin/ai-berkshire.git
 # Generate and install Codex skills to ~/.codex/skills
 cd ai-berkshire
 ./scripts/install-codex-skills.sh
-
-# Optional: install Codex slash prompts to ~/.codex/prompts
-# for a Claude Code-like /investment-research entry point
-./scripts/install-codex-prompts.sh
 ```
 
-The repository maintains three entry points: `skills/*.md` are the Claude Code command sources; `codex-skills/*/SKILL.md` are Codex skill packages generated from `skills/*.md` by `scripts/sync-codex-skills.py`; `codex-prompts/*.md` are an optional Codex slash-prompt compatibility layer.
+The repository maintains two entry points: `skills/*.md` are the Claude Code command sources; `codex-skills/*/SKILL.md` are Codex skill packages generated from `skills/*.md` by `scripts/sync-codex-skills.py`.
 
 ### 3. Use
 

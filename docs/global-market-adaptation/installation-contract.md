@@ -15,11 +15,9 @@
 - Shell (Linux / macOS):
   - `scripts/install-claude-commands.sh`
   - `scripts/install-codex-skills.sh`
-  - `scripts/install-codex-prompts.sh`
 - PowerShell (Windows):
   - `scripts/install-claude-commands.ps1`
   - `scripts/install-codex-skills.ps1`
-  - `scripts/install-codex-prompts.ps1`
 
 ## 3. 動作環境変数 `AI_BERKSHIRE_HOME`
 
